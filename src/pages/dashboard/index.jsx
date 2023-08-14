@@ -1,4 +1,7 @@
-import Graficos from "@/components/Graficos";
+import GraficoBar from "@/components/GraficoBar";
+import GraficoDonut from "@/components/GraficoDonut";
+import CampanhaPaga from "@/components/CampanhaPaga";
+import styles from '@/styles/Home.module.css';
 
 
 export default function dashboard(){
@@ -6,7 +9,11 @@ export default function dashboard(){
         <>
             <div>
                 <h2>Página do Dashboard</h2>
-                <Graficos />
+                <div className={`${styles.paginaInicial}`}>
+                    <GraficoBar />
+                    <GraficoDonut />
+                    <CampanhaPaga />
+                </div>
             </div>
         </>
     )
