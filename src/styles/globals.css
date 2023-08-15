@@ -24,6 +24,6 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-    background-size: 100% 100%;
+    background-size: 200% 200%;
     background-repeat: no-repeat;
 }
