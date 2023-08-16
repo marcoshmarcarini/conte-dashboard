@@ -1,121 +1,189 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import {db} from '../../utils/firebase';
+import { db } from '../../utils/firebase';
 import { addDoc, collection, deleteDoc, getDocs, doc, orderBy, query, updateDoc } from 'firebase/firestore';
 
-
-
 import styles from './FireStore.module.css';
-import Script from "next/script";
+
 
 export default function FireStore() {
-  //Estados
   const [novaNota, setNovaNota] = useState({
     campanha: '', tipo: '', pppi: '',
     fornecedor: '', descricao: '', valor: '',
     notafiscal: '', processo: '', statusNota: 'naolancada',
     pagoPrefeitura: false, pagoFornecedor: false, timeStamp: null
-  })
+  });
   const [notas, setNotas] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [editarNota, setEditarNota] = useState(null)
-    
-    //Função para adicionar o item
-    const AddNota = async (e) => {
-        e.preventDefault();
-        if(editarNota){
-            const notaRef = doc(db, 'notas', editarNota.id)
-            await updateDoc(notaRef, {
-                campanha: editarNota.campanha, tipo: editarNota.tipo, pppi: editarNota.pppi,
-                fornecedor: editarNota.fornecedor, descricao: editarNota.descricao, valor: editarNota.valor,
-                notafiscal: editarNota.notafiscal, processo: editarNota.processo, statusNota: editarNota.statusNota,
-                pagoPrefeitura: editarNota.pagoPrefeitura, pagoFornecedor: editarNota.pagoFornecedor, /* timeStamp: new Date() */
-            })
-        } else
-        if(novaNota.campanha !== '' && novaNota.tipo !== '' && novaNota.pppi !== '' &&
-        novaNota.fornecedor !== '' && novaNota.descricao !== '' && novaNota.valor !== '' &&
-        novaNota.notafiscal !== '' && novaNota.processo !== '' || novaNota.statusNota !== 'naolancada' ||
-        novaNota.pagoPrefeitura !== false || novaNota.pagoFornecedor !== false){
-            console.log(novaNota)
-            //setNotas({...notas, novaNota}) 
-            await addDoc(collection(db, 'notas'), {
-                campanha: novaNota.campanha, tipo: novaNota.tipo, pppi: novaNota.pppi,
-                fornecedor: novaNota.fornecedor, descricao: novaNota.descricao, valor: novaNota.valor,
-                notafiscal: novaNota.notafiscal, processo: novaNota.processo, statusNota: novaNota.statusNota,
-                pagoPrefeitura: novaNota.pagoPrefeitura, pagoFornecedor: novaNota.pagoFornecedor, timeStamp: new Date()
-            })
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editarNota, setEditarNota] = useState(null);
 
-            //Resetar a lista
-            MostrarNotas()
+  const AddNota = async (e) => {
+    e.preventDefault();
 
-            //Resetar o formulário
-            setNovaNota({
-                campanha: '', tipo: '', pppi: '',
-                fornecedor: '', descricao: '', valor: '',
-                notafiscal: '', processo: '', statusNota: 'naolancada',
-                pagoPrefeitura: false, pagoFornecedor: false
-            })
-        }else{
-            console.log('Algo deu errado')
-        }
+    if (editarNota) {
+      const notaRef = doc(db, 'notas', editarNota.id);
+      await updateDoc(notaRef, {
+        campanha: editarNota.campanha,
+        tipo: editarNota.tipo,
+        pppi: editarNota.pppi,
+        fornecedor: editarNota.fornecedor,
+        descricao: editarNota.descricao,
+        valor: editarNota.valor,
+        notafiscal: editarNota.notafiscal,
+        processo: editarNota.processo,
+        statusNota: editarNota.statusNota,
+        pagoPrefeitura: editarNota.pagoPrefeitura,
+        pagoFornecedor: editarNota.pagoFornecedor,
+      });
+
+      setEditarNota(null);
+      closeModal();
+    } else if (novaNota.campanha !== '' /* && ... */) {
+      await addDoc(collection(db, 'notas'), {
+        campanha: novaNota.campanha,
+        tipo: novaNota.tipo,
+        pppi: novaNota.pppi,
+        fornecedor: novaNota.fornecedor,
+        descricao: novaNota.descricao,
+        valor: novaNota.valor,
+        notafiscal: novaNota.notafiscal,
+        processo: novaNota.processo,
+        statusNota: novaNota.statusNota,
+        pagoPrefeitura: novaNota.pagoPrefeitura,
+        pagoFornecedor: novaNota.pagoFornecedor,
+        timeStamp: new Date()
+      });
+
+      MostrarNotas();
+
+      setNovaNota({
+        campanha: '', tipo: '', pppi: '',
+        fornecedor: '', descricao: '', valor: '',
+        notafiscal: '', processo: '', statusNota: 'naolancada',
+        pagoPrefeitura: false, pagoFornecedor: false
+      });
+    } else {
+      console.log('Algo deu errado');
     }
+  };
 
-    //Buscar as Notas
-    useEffect(() => {
-        MostrarNotas()
-    }, [])
+  useEffect(() => {
+    MostrarNotas();
+  }, []);
 
-    
-    const MostrarNotas = async () => {
-        const q = query(collection(db, 'notas'), orderBy('timeStamp'))
-        const snap = await getDocs(q)
-        const snapData = []
-        snap.forEach((doc) => {
-            snapData.push({id: doc.id, ...doc.data()})
-        })
-        setNotas(snapData)
-        console.log(notas)
-    }
+  const MostrarNotas = async () => {
+    const colecao = collection(db, 'notas');
+    const q = query(
+      colecao,
+      orderBy('campanha', 'asc'),
+      orderBy('pppi', 'asc'),
+      orderBy('timeStamp', 'desc')
+    );
+    const snap = await getDocs(q);
+    const snapData = [];
+    snap.forEach((doc) => {
+      snapData.push({ id: doc.id, ...doc.data() });
+    });
+    setNotas(snapData);
+  };
 
-    const deletarNota = async (id) => {
-        await deleteDoc(doc(db, 'notas', id))
-        MostrarNotas()
-    }
+  const deletarNota = async (id) => {
+    await deleteDoc(doc(db, 'notas', id));
+    MostrarNotas();
+  };
 
+  const openModal = (nota) => {
+    setEditarNota({
+      id: nota.id,
+      campanha: nota.campanha,
+      tipo: nota.tipo,
+      pppi: nota.pppi,
+      fornecedor: nota.fornecedor,
+      descricao: nota.descricao,
+      valor: nota.valor,
+      notafiscal: nota.notafiscal,
+      processo: nota.processo,
+      statusNota: nota.statusNota,
+      pagoPrefeitura: nota.pagoPrefeitura,
+      pagoFornecedor: nota.pagoFornecedor,
+      timeStamp: nota.timeStamp,
+    });
+    setIsModalOpen(true);
+  };
 
-    //Configuração do Modal
-    const openModal = (nota) => {
-        setEditarNota(nota)
-        setIsModalOpen(true)
-        
-            
-    }
-    const closeModal = () => {
-        setEditarNota(null)
-        setIsModalOpen(false)
-    }
+  const closeModal = () => {
+    setEditarNota(null);
+    setIsModalOpen(false);
+  };
+
  
   return (
-    <div className={`flex flex-col justify-center items-center gap-5 py-5`}>
-        <form className={`container mr-auto ml-auto gap-5`}>
+    <div className={`flex flex-col justify-center items-center gap-5 py-5 `}>
+        <form className={`container mr-auto ml-auto gap-5 flex flex-col justify-center items-center h-screen`}>
             <div className={`columns-1 gap-5 md:columns-2`}>
                 <div className={`${styles.formCol1}`}>
                     <div className={`${styles.formControl}`}>
-                        <input type="text" value={novaNota.campanha} placeholder={`Campanha`} onChange={(e) => setNovaNota({...novaNota, campanha: e.target.value})}/>
-                        <input type="text" value={novaNota.tipo} placeholder={`Tipo`} onChange={(e) => setNovaNota({...novaNota, tipo: e.target.value})}/>
-                        <input type="number" value={novaNota.pppi} placeholder={`PP/PI`} onChange={(e) => setNovaNota({...novaNota, pppi: e.target.value})}/>
-                        <input type="text" value={novaNota.fornecedor} placeholder={`Fornecedor`} onChange={(e) => setNovaNota({...novaNota, fornecedor: e.target.value})}/>
-                        <input type="text" value={novaNota.descricao} placeholder={`Descrição`} onChange={(e) => setNovaNota({...novaNota, descricao: e.target.value})}/>
+                        <input 
+                            type="text" 
+                            value={novaNota.campanha} 
+                            placeholder={`Campanha`} 
+                            onChange={(e) => setNovaNota({...novaNota, campanha: e.target.value})}
+                        />
+
+                        <input 
+                            type="text" 
+                            value={novaNota.tipo}   
+                            placeholder={`Tipo`}    
+                            onChange={(e) => setNovaNota({...novaNota, tipo: e.target.value})}  
+                        />
+
+                        <input 
+                            type="number" 
+                            value={novaNota.pppi} 
+                            placeholder={`PP/PI`} 
+                            onChange={(e) => setNovaNota({...novaNota, pppi: e.target.value})}
+                        />
+
+                        <input 
+                            type="text" 
+                            value={novaNota.fornecedor} 
+                            placeholder={`Fornecedor`} 
+                            onChange={(e) => setNovaNota({...novaNota, fornecedor: e.target.value})}
+                        />
+
+                        <input 
+                            type="text" 
+                            value={novaNota.descricao} 
+                            placeholder={`Descrição`} 
+                            onChange={(e) => setNovaNota({...novaNota, descricao: e.target.value})}
+                        />
+
                     </div> 
                 </div>
                     
                 <div className={`${styles.formCol1} mt-[10px]`}>
                     <div className={`${styles.formControl}`}>
-                        <input type="number" value={novaNota.valor} placeholder={`Valor`} onChange={(e) => setNovaNota({...novaNota, valor: e.target.value})}/>
-                        <input type="text" value={novaNota.notafiscal} placeholder={`Nota Fiscal`} onChange={(e) => setNovaNota({...novaNota, notafiscal: e.target.value})}/>
-                        <input type="number" value={novaNota.processo} placeholder={`Processo`} onChange={(e) => setNovaNota({...novaNota, processo: e.target.value})}/>
+                        <input 
+                            type="number" 
+                            value={novaNota.valor} 
+                            placeholder={`Valor`} 
+                            onChange={(e) => setNovaNota({...novaNota, valor: e.target.value})}
+                        />
+                        <input 
+                            type="text" 
+                            value={novaNota.notafiscal} 
+                            placeholder={`Nota Fiscal`} 
+                            onChange={(e) => setNovaNota({...novaNota, notafiscal: e.target.value})}
+                            />
+                        <input 
+                            type="number" 
+                            value={novaNota.processo} 
+                            placeholder={`Processo`} 
+                            onChange={(e) => setNovaNota({...novaNota, processo: e.target.value})}
+                        />
                     </div>
+
                     <select value={novaNota.statusNota} onChange={(e) => setNovaNota({...novaNota, statusNota: e.target.value})}>
                         <option value="aguardando">Aguardando Nota</option>
                         <option value="enviada">Nota Enviada</option>
@@ -123,6 +191,7 @@ export default function FireStore() {
                         <option value="concluido">Concluído</option>
                         <option value="naoenviada">Não Enviada</option>
                     </select>
+
                     <div>
                         <input 
                             type="checkbox" 
@@ -134,6 +203,7 @@ export default function FireStore() {
                         />
                         <label htmlFor="pagoPrefeitura">Pago Prefeitura</label>
                     </div>
+
                     <div>
                         <input 
                             type="checkbox" 
@@ -145,16 +215,22 @@ export default function FireStore() {
                         />
                         <label htmlFor="pagoFornecedor">Pago Fornecedor/Veículo</label>
                     </div>
+
                 </div> 
             </div>
                     
             <div className={`${styles.formSubmit}`}>
-                <input type="submit" value="Adicionar Nota" onClick={AddNota} />
+                <input 
+                    type="submit" 
+                    value="Adicionar Nota" 
+                    onClick={AddNota} 
+                />
             </div>
+
         </form>
 
-        <div className={`container ${styles.notasList}`}>
-            <h2>Notas Fiscais</h2>
+        <div className={`container ${styles.notasList} flex flex-col gap-5 justify-center items-center`} id={`notas-fiscais`}>
+            <h2 className={`text-center font-bold text-lg`}>Notas Fiscais</h2>
             <table className={`table-fixed border-collapse border border-slate-500`}>
                 <thead>
                     <tr>
@@ -201,7 +277,12 @@ export default function FireStore() {
                                     className={styles.btnRemove} 
                                     onClick={() => deletarNota(nota.id)}
                                 > 
-                                    <Image width="20" height="20" src="https://img.icons8.com/ios-filled/20/ffffff/delete-sign--v1.png" alt="delete-sign--v1" />
+                                    <Image 
+                                        width="20" 
+                                        height="20" 
+                                        src="https://img.icons8.com/ios-filled/20/ffffff/delete-sign--v1.png" 
+                                        alt="delete-sign--v1" 
+                                    />
                                 </button>
                             </td>
                             <td>
@@ -210,7 +291,12 @@ export default function FireStore() {
                                     className={styles.btnRemove} 
                                     onClick={() => openModal(nota)}
                                 > 
-                                    <Image width="20" height="20" src="https://img.icons8.com/ios-filled/20/ffffff/available-updates.png" alt="available-updates" />
+                                    <Image 
+                                        width="20" 
+                                        height="20" 
+                                        src="https://img.icons8.com/ios-filled/20/ffffff/available-updates.png" 
+                                        alt="available-updates" 
+                                    />
                                 </button>
                             </td>
                         </tr>
@@ -225,7 +311,7 @@ export default function FireStore() {
       {isModalOpen && (
         <div
           id="modal"
-          className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-blue-500 bg-opacity-50 transform scale-100 transition-transform duration-300"
+          className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-orange-300 bg-opacity-50 transform scale-100 transition-transform duration-300"
         >
           {/* Modal content */}
           <div className="bg-white w-1/2 h-1/2 p-12">
@@ -257,19 +343,53 @@ export default function FireStore() {
                 <div className={`columns-1 gap-5 md:columns-2`}>
                     <div className={`${styles.formCol1}`}>
                         <div className={`${styles.formControl}`}>
-                            <input type="text" value={editarNota ? editarNota.campanha || '' : ''} placeholder={`Campanha`} onChange={(e) => setNovaNota({...editarNota, campanha: e.target.value})}/>
-                            <input type="text" value={editarNota?.tipo || ''} placeholder={`Tipo`} onChange={(e) => setNovaNota({...editarNota, tipo: e.target.value})}/>
-                            <input type="number" value={editarNota?.pppi || ''} placeholder={`PP/PI`} onChange={(e) => setNovaNota({...editarNota, pppi: e.target.value})}/>
-                            <input type="text" value={editarNota?.fornecedor || ''} placeholder={`Fornecedor`} onChange={(e) => setNovaNota({...editarNota, fornecedor: e.target.value})}/>
-                            <input type="text" value={editarNota?.descricao || ''} placeholder={`Descrição`} onChange={(e) => setNovaNota({...editarNota, descricao: e.target.value})}/>
+                            <input 
+                                type="text" value={editarNota?.campanha || ''} 
+                                placeholder={`Campanha`} 
+                                onChange={(e) => setNovaNota({...editarNota, campanha: e.target.value})}
+                            />
+                            <input  
+                                type="text" value={editarNota?.tipo || ''} 
+                                placeholder={`Tipo`} 
+                                onChange={(e) => setNovaNota({...editarNota, tipo: e.target.value})}
+                            />
+                            <input 
+                                type="number" 
+                                value={editarNota?.pppi || ''} placeholder={`PP/PI`} 
+                                onChange={(e) => setNovaNota({...editarNota, pppi: e.target.value})}
+                            />
+                            <input 
+                                type="text" value={editarNota?.fornecedor || ''} 
+                                placeholder={`Fornecedor`} 
+                                onChange={(e) => setNovaNota({...editarNota, fornecedor: e.target.value})}
+                            />
+                            <input 
+                                type="text" value={editarNota?.descricao || ''} 
+                                placeholder={`Descrição`} 
+                                onChange={(e) => setNovaNota({...editarNota, descricao: e.target.value})}
+                            />
                         </div> 
                     </div>
                         
                     <div className={`${styles.formCol1} mt-[10px]`}>
                         <div className={`${styles.formControl}`}>
-                            <input type="number" value={editarNota?.valor || ''} placeholder={`Valor`} onChange={(e) => setNovaNota({...editarNota, valor: e.target.value})}/>
-                            <input type="text" value={editarNota?.notafiscal || ''} placeholder={`Nota Fiscal`} onChange={(e) => setNovaNota({...editarNota, notafiscal: e.target.value})}/>
-                            <input type="number" value={editarNota?.processo || ''} placeholder={`Processo`} onChange={(e) => setNovaNota({...editarNota, processo: e.target.value})}/>
+                            <input 
+                                type="number" value={editarNota?.valor || ''} 
+                                placeholder={`Valor`} 
+                                onChange={(e) => setNovaNota({...editarNota, valor: e.target.value})}
+                            />
+                            <input 
+                                type="text" 
+                                value={editarNota?.notafiscal || ''} 
+                                placeholder={`Nota Fiscal`} 
+                                onChange={(e) => setNovaNota({...editarNota, notafiscal: e.target.value})}
+                            />
+                            <input 
+                                type="number" 
+                                value={editarNota?.processo || ''} 
+                                placeholder={`Processo`} 
+                                onChange={(e) => setNovaNota({...editarNota, processo: e.target.value})}
+                            />
                         </div>
                         <select value={editarNota?.statusNota || ''} onChange={(e) => setNovaNota({...editarNota, statusNota: e.target.value})}>
                             <option value="aguardando">Aguardando Nota</option>
@@ -304,7 +424,11 @@ export default function FireStore() {
                 </div>
                         
                 <div className={`${styles.formSubmit}`}>
-                    <input type="submit" value="Adicionar Nota" onClick={AddNota} />
+                    <input 
+                        type="submit" 
+                        value="Atualizar Nota" 
+                        onClick={AddNota} 
+                    />
                 </div>
             </form>
           </div>
@@ -315,15 +439,3 @@ export default function FireStore() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
