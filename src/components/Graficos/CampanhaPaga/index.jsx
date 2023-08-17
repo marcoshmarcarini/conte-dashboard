@@ -1,6 +1,6 @@
 "use client"
 import React,{useState, useEffect} from 'react'
-import {collection, getDocs, query, where} from 'firebase/firestore'
+import {collection, getDocs, orderBy, query, where} from 'firebase/firestore'
 import { db } from '@/utils/firebase'
 import styles from './CampanhaPaga.module.css'
 import {Chart as ChartJS, CategoryScale, LinearScale,BarElement, Title, Tooltip, Legend} from 'chart.js'
@@ -26,14 +26,15 @@ export default function CapanhasPagas(){
     //Valores Gerais
     useEffect(() => {
         const graphData = async () => {
-            const q = query(collection(db, 'notas'), where('pago', '==', "Sim"))
+            const colecao = collection(db, 'notas')
+            const q = query(colecao, where('statusNota', '==', 'concluido'))
             const snapQuery = await getDocs(q)
             const snapDataQuery = []
 
             snapQuery.forEach((doc) => {
                 snapDataQuery.push({id: doc.id, ...doc.data()})
             })
-
+            console.log(snapQuery)
             setGraph(snapDataQuery)
         }
         graphData()
@@ -57,15 +58,16 @@ export default function CapanhasPagas(){
     const labels = graph.map(row => row.campanha)
     const value = graph.map(row => Number(row.valor))   
 
+    console.log(graph)
+
     var somaValor = 0
 
-    console.log(value)
 
-    for(let i = 0; i<labels.length; i++){
+    for(let i = 0; i < labels.length; i++){
         somaValor += value[i]
     }
 
-    console.log(`Total: R$ ${somaValor}`)
+    console.log(`Total: R$ ${somaValor.toFixed(2).replace('.', ',')}`)
     
     const data = {
         labels,
