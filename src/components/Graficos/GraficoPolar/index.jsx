@@ -59,17 +59,24 @@ export default function GraficoPolar(){
     const labels = graph.map(row => row.campanha)
     const statusNota = graph.map((row) => row.statusNota )
     const campanhaNota = graph.map((row) => row.campanha)
+    
     console.log(campanhaNota)
+    
     var qtdeConcluido = 0
     var qtdeEnviada = 0
     var qtdeAguardando = 0
     var qtdeEmAndamento = 0
     var qtdeNaoEnviada = 0
     var arrayStatus = []
+
+    
+
     /* 
         Quando o nome da campanha for igual ao nome da campanha do array de 
         status da nota na posição i, incrementa o valor.
     */
+
+
 
 
     for(let i = 0; i < statusNota.length; i++){
