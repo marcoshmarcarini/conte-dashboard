@@ -33,6 +33,64 @@ export default function GraficoPolar(){
     
 
     }, [])
+
+    const countStatusPerCampanha = () => {
+        const statusCount = {}
+
+        graph.forEach(row => {
+            const campanha = row.campanha
+            const status = row.statusNota
+
+            if(!statusCount[campanha]){
+                statusCount[campanha] = {
+                    concluido: 0,
+                    enviada: 0,
+                    aguardando: 0,
+                    em_andamento: 0,
+                    nao_enviada: 0,
+                }
+            }
+
+            statusCount[campanha][status]++        
+        })
+
+        return statusCount
+    }
+
+    const statusCountPerCampanha = countStatusPerCampanha()
+
+    //Transformar os dados em um formato adequado para o gráfico polar.
+    const campanhas = Object.keys(statusCountPerCampanha)
+
+    
+
+    const statusLabels = campanhas.length > 0 ? Object.keys(statusCountPerCampanha[campanhas[0]]) : []
+    
+    //Função para obter a cor de fundo com base no status
+        const getBackgroundColorForStatus = status => {
+            //Mapeie os status para as cores correnspondentes
+            const colorMap = {
+                concluido: 'rgba(255, 99, 132, 0.5)',
+                enviada: 'rgba(54, 162, 235, 0.5)',
+                aguardando: 'rgba(255, 206, 86, 0.5)',
+                em_andamento: 'rgba(75, 192, 192, 0.5)',
+                nao_enviada: 'rgba(153, 102, 255, 0.5)',
+            };
+            return colorMap[status]
+        }
+
+    const datasets = statusLabels.map(label => ({
+        label,
+        data: campanhas.map(campanha => statusCountPerCampanha[campanha][label]),
+        backgroundColor: getBackgroundColorForStatus(label),
+    }))
+
+    const data = {
+        labels: campanhas,
+        datasets,
+    }
+
+    
     
     const options = {
         responsive: true,
@@ -55,83 +113,8 @@ export default function GraficoPolar(){
         },   
     }
 
-    //Gráfico de Barra
-    const labels = graph.map(row => row.campanha)
-    const statusNota = graph.map((row) => row.statusNota )
-    const campanhaNota = graph.map((row) => row.campanha)
-    
-    console.log(campanhaNota)
-    
-    var qtdeConcluido = 0
-    var qtdeEnviada = 0
-    var qtdeAguardando = 0
-    var qtdeEmAndamento = 0
-    var qtdeNaoEnviada = 0
-    var arrayStatus = []
-
     
 
-    /* 
-        Quando o nome da campanha for igual ao nome da campanha do array de 
-        status da nota na posição i, incrementa o valor.
-    */
-
-
-
-
-    for(let i = 0; i < statusNota.length; i++){
-        if(statusNota[i] == 'concluido'){
-            qtdeConcluido = qtdeConcluido + 1
-        }  
-    }
-
-    for(let i = 0; i < statusNota.length; i++){
-        if(statusNota[i] == 'enviada'){
-            qtdeEnviada = qtdeEnviada + 1
-        }   
-    }
-
-    for(let i = 0; i < statusNota.length; i++){
-        if(statusNota[i] == 'aguardando'){
-            qtdeAguardando = qtdeAguardando + 1
-        }   
-    }
-
-    for(let i = 0; i < statusNota.length; i++){
-        if(statusNota[i] == 'emandamento'){
-            qtdeEmAndamento = qtdeEmAndamento + 1
-        }
-    }
-
-    for(let i = 0; i < statusNota.length; i++){
-        if(statusNota[i] == 'naoenviada'){
-            qtdeNaoEnviada = qtdeNaoEnviada + 1
-        }  
-    }
-
-    arrayStatus.push(qtdeConcluido, qtdeEnviada, qtdeEmAndamento, qtdeAguardando, qtdeNaoEnviada)
-
-
-
-    console.log(arrayStatus)
-
-
-    const data = {
-        labels,
-        datasets: [{
-            label: 'Valor',
-            data: arrayStatus,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)',
-                'rgba(255, 159, 64, 0.5)',
-              ],
-              borderWidth: 1,
-        }]
-    }
 
 
     return(

@@ -17,6 +17,11 @@ export default function FireStore() {
   const [notas, setNotas] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editarNota, setEditarNota] = useState(null);
+  const [updatedNota, setUpdatedNota] = useState({
+    campanha: '', tipo: '', pppi: '', fornecedor: '',
+    descricao: '', valor: '', notafiscal: '', processo: '',
+    statusNota: '', pagoPrefeitura: false, pagoFornecedor: false
+  });
 
   const AddNota = async (e) => {
     e.preventDefault();
@@ -94,27 +99,51 @@ export default function FireStore() {
   };
 
   const openModal = (nota) => {
-    setEditarNota({
-      id: nota.id,
-      campanha: nota.campanha,
-      tipo: nota.tipo,
-      pppi: nota.pppi,
-      fornecedor: nota.fornecedor,
-      descricao: nota.descricao,
-      valor: nota.valor,
-      notafiscal: nota.notafiscal,
-      processo: nota.processo,
-      statusNota: nota.statusNota,
-      pagoPrefeitura: nota.pagoPrefeitura,
-      pagoFornecedor: nota.pagoFornecedor,
-      timeStamp: nota.timeStamp,
-    });
+    setEditarNota(nota);
+    setUpdatedNota({
+        campanha: nota.campanha,
+        tipo: nota.tipo,
+        pppi: nota.pppi,
+        fornecedor: nota.fornecedor,
+        descricao: nota.descricao,
+        valor: nota.valor,
+        notafiscal: nota.notafiscal,
+        processo: nota.processo,
+        statusNota: nota.statusNota,
+        pagoPrefeitura: nota.pagoPrefeitura,
+        pagoFornecedor: nota.pagoFornecedor,
+    })
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setEditarNota(null);
     setIsModalOpen(false);
+  };
+
+  const updateNotaInFirestore = async (notaId) => {
+    const notaRef = doc(db, 'notas', notaId);
+    await updateDoc(notaRef, updatedNota);
+
+    // Close the modal and reset state
+    setUpdatedNota({
+      campanha: '',
+      tipo: '',
+      pppi: '',
+      fornecedor: '',
+      descricao: '',
+      valor: '',
+      notafiscal: '',
+      processo: '',
+      statusNota: '',
+      pagoPrefeitura: false,
+      pagoFornecedor: false,
+    });
+    setEditarNota(null);
+    closeModal();
+
+    // Refresh the list of notes
+    MostrarNotas();
   };
 
  
@@ -447,29 +476,29 @@ export default function FireStore() {
                     <div className={`${styles.formCol1}`}>
                         <div className={`${styles.formControl}`}>
                             <input 
-                                type="text" value={editarNota?.campanha || ''} 
+                                type="text" value={updatedNota.campanha || ''} 
                                 placeholder={`Campanha`} 
-                                onChange={(e) => setNovaNota({...editarNota, campanha: e.target.value})}
+                                onChange={(e) => setUpdatedNota({...updatedNota, campanha: e.target.value})}
                             />
                             <input  
-                                type="text" value={editarNota?.tipo || ''} 
+                                type="text" value={updatedNota.tipo || ''} 
                                 placeholder={`Tipo`} 
-                                onChange={(e) => setNovaNota({...editarNota, tipo: e.target.value})}
+                                onChange={(e) => setUpdatedNota({...updatedNota, tipo: e.target.value})}
                             />
                             <input 
                                 type="number" 
-                                value={editarNota?.pppi || ''} placeholder={`PP/PI`} 
-                                onChange={(e) => setNovaNota({...editarNota, pppi: e.target.value})}
+                                value={updatedNota.pppi || ''} placeholder={`PP/PI`} 
+                                onChange={(e) => setUpdatedNota({...updatedNota, pppi: e.target.value})}
                             />
                             <input 
-                                type="text" value={editarNota?.fornecedor || ''} 
+                                type="text" value={updatedNota.fornecedor || ''} 
                                 placeholder={`Fornecedor`} 
-                                onChange={(e) => setNovaNota({...editarNota, fornecedor: e.target.value})}
+                                onChange={(e) => setUpdatedNota({...updatedNota, fornecedor: e.target.value})}
                             />
                             <input 
-                                type="text" value={editarNota?.descricao || ''} 
+                                type="text" value={updatedNota.descricao || ''} 
                                 placeholder={`Descrição`} 
-                                onChange={(e) => setNovaNota({...editarNota, descricao: e.target.value})}
+                                onChange={(e) => setUpdatedNota({...updatedNota, descricao: e.target.value})}
                             />
                         </div> 
                     </div>
@@ -477,24 +506,24 @@ export default function FireStore() {
                     <div className={`${styles.formCol1} mt-[10px]`}>
                         <div className={`${styles.formControl}`}>
                             <input 
-                                type="number" value={editarNota?.valor || ''} 
+                                type="number" value={updatedNota.valor || ''} 
                                 placeholder={`Valor`} 
-                                onChange={(e) => setNovaNota({...editarNota, valor: e.target.value})}
+                                onChange={(e) => setUpdatedNota({...updatedNota, valor: e.target.value})}
                             />
                             <input 
                                 type="text" 
-                                value={editarNota?.notafiscal || ''} 
+                                value={updatedNota.notafiscal || ''} 
                                 placeholder={`Nota Fiscal`} 
-                                onChange={(e) => setNovaNota({...editarNota, notafiscal: e.target.value})}
+                                onChange={(e) => setUpdatedNota({...updatedNota, notafiscal: e.target.value})}
                             />
                             <input 
                                 type="number" 
-                                value={editarNota?.processo || ''} 
+                                value={updatedNota.processo || ''} 
                                 placeholder={`Processo`} 
-                                onChange={(e) => setNovaNota({...editarNota, processo: e.target.value})}
+                                onChange={(e) => setUpdatedNota({...updatedNota, processo: e.target.value})}
                             />
                         </div>
-                        <select value={editarNota?.statusNota || ''} onChange={(e) => setNovaNota({...editarNota, statusNota: e.target.value})}>
+                        <select value={updatedNota.statusNota || ''} onChange={(e) => setUpdatedNota({...updatedNota, statusNota: e.target.value})}>
                             <option value="aguardando">Aguardando Nota</option>
                             <option value="enviada">Nota Enviada</option>
                             <option value="emandamento">Em Andamento</option>
@@ -505,10 +534,10 @@ export default function FireStore() {
                             <input 
                                 type="checkbox" 
                                 name="Pago" 
-                                value={novaNota.pagoPrefeitura} 
+                                value={updatedNota.pagoPrefeitura} 
                                 id="pagoPrefeitura" 
-                                checked={novaNota.pagoPrefeitura} 
-                                onChange={(e) => setNovaNota({...novaNota, pagoPrefeitura: e.target.checked})} 
+                                checked={updatedNota.pagoPrefeitura} 
+                                onChange={(e) => setUpdatedNota({...updatedNota, pagoPrefeitura: e.target.checked})} 
                             />
                             <label htmlFor="pagoPrefeitura">Pago Prefeitura</label>
                         </div>
@@ -516,10 +545,10 @@ export default function FireStore() {
                             <input 
                                 type="checkbox" 
                                 name="Pago" 
-                                value={novaNota.pagoFornecedor} 
+                                value={updatedNota.pagoFornecedor} 
                                 id="pagoFornecedor" 
-                                checked={novaNota.pagoFornecedor} 
-                                onChange={(e) => setNovaNota({...novaNota, pagoFornecedor: e.target.checked})} 
+                                checked={updatedNota.pagoFornecedor} 
+                                onChange={(e) => setUpdatedNota({...updatedNota, pagoFornecedor: e.target.checked})} 
                             />
                             <label htmlFor="pagoFornecedor">Pago Fornecedor/Veículo</label>
                         </div>
@@ -530,7 +559,7 @@ export default function FireStore() {
                     <input 
                         type="submit" 
                         value="Atualizar Nota" 
-                        onClick={AddNota} 
+                        onClick={() => updateNotaInFirestore(editarNota.id)} 
                     />
                 </div>
             </form>
