@@ -22,6 +22,7 @@ export default function FireStore() {
     descricao: '', valor: '', notafiscal: '', processo: '',
     statusNota: '', pagoPrefeitura: false, pagoFornecedor: false
   });
+  const [alteraCorBtnModal, setAlteraCorBtnModal] = useState('000000')
 
   const AddNota = async (e) => {
     e.preventDefault();
@@ -29,35 +30,20 @@ export default function FireStore() {
     if (editarNota) {
       const notaRef = doc(db, 'notas', editarNota.id);
       await updateDoc(notaRef, {
-        campanha: editarNota.campanha,
-        tipo: editarNota.tipo,
-        pppi: editarNota.pppi,
-        fornecedor: editarNota.fornecedor,
-        descricao: editarNota.descricao,
-        valor: editarNota.valor,
-        notafiscal: editarNota.notafiscal,
-        processo: editarNota.processo,
-        statusNota: editarNota.statusNota,
-        pagoPrefeitura: editarNota.pagoPrefeitura,
-        pagoFornecedor: editarNota.pagoFornecedor,
+        campanha: editarNota.campanha, tipo: editarNota.tipo, pppi: editarNota.pppi,
+        fornecedor: editarNota.fornecedor, descricao: editarNota.descricao, valor: editarNota.valor,
+        notafiscal: editarNota.notafiscal, processo: editarNota.processo, statusNota: editarNota.statusNota,
+        pagoPrefeitura: editarNota.pagoPrefeitura, pagoFornecedor: editarNota.pagoFornecedor,
       });
 
       setEditarNota(null);
       closeModal();
     } else if (novaNota.campanha !== '' /* && ... */) {
       await addDoc(collection(db, 'notas'), {
-        campanha: novaNota.campanha,
-        tipo: novaNota.tipo,
-        pppi: novaNota.pppi,
-        fornecedor: novaNota.fornecedor,
-        descricao: novaNota.descricao,
-        valor: novaNota.valor,
-        notafiscal: novaNota.notafiscal,
-        processo: novaNota.processo,
-        statusNota: novaNota.statusNota,
-        pagoPrefeitura: novaNota.pagoPrefeitura,
-        pagoFornecedor: novaNota.pagoFornecedor,
-        timeStamp: new Date()
+        campanha: novaNota.campanha, tipo: novaNota.tipo, pppi: novaNota.pppi,
+        fornecedor: novaNota.fornecedor, descricao: novaNota.descricao, valor: novaNota.valor,
+        notafiscal: novaNota.notafiscal, processo: novaNota.processo, statusNota: novaNota.statusNota,
+        pagoPrefeitura: novaNota.pagoPrefeitura, pagoFornecedor: novaNota.pagoFornecedor, timeStamp: new Date()
       });
 
       MostrarNotas();
@@ -101,17 +87,10 @@ export default function FireStore() {
   const openModal = (nota) => {
     setEditarNota(nota);
     setUpdatedNota({
-        campanha: nota.campanha,
-        tipo: nota.tipo,
-        pppi: nota.pppi,
-        fornecedor: nota.fornecedor,
-        descricao: nota.descricao,
-        valor: nota.valor,
-        notafiscal: nota.notafiscal,
-        processo: nota.processo,
-        statusNota: nota.statusNota,
-        pagoPrefeitura: nota.pagoPrefeitura,
-        pagoFornecedor: nota.pagoFornecedor,
+        campanha: nota.campanha, tipo: nota.tipo, pppi: nota.pppi,
+        fornecedor: nota.fornecedor, descricao: nota.descricao, valor: nota.valor,
+        notafiscal: nota.notafiscal, processo: nota.processo, statusNota: nota.statusNota,
+        pagoPrefeitura: nota.pagoPrefeitura, pagoFornecedor: nota.pagoFornecedor,
     })
     setIsModalOpen(true);
   };
@@ -119,6 +98,7 @@ export default function FireStore() {
   const closeModal = () => {
     setEditarNota(null);
     setIsModalOpen(false);
+    setAlteraCorBtnModal('000000')
   };
 
   const updateNotaInFirestore = async (notaId) => {
@@ -127,17 +107,10 @@ export default function FireStore() {
 
     // Close the modal and reset state
     setUpdatedNota({
-      campanha: '',
-      tipo: '',
-      pppi: '',
-      fornecedor: '',
-      descricao: '',
-      valor: '',
-      notafiscal: '',
-      processo: '',
-      statusNota: '',
-      pagoPrefeitura: false,
-      pagoFornecedor: false,
+      campanha: '', tipo: '', pppi: '',
+      fornecedor: '', descricao: '', valor: '',
+      notafiscal: '', processo: '', statusNota: '',
+      pagoPrefeitura: false, pagoFornecedor: false,
     });
     setEditarNota(null);
     closeModal();
@@ -146,16 +119,25 @@ export default function FireStore() {
     MostrarNotas();
   };
 
+
+  const handleAlteraCorBtnCloseModal = () => {
+        setAlteraCorBtnModal('e67e22')
+  }
+
+  const handleAlteraCorBtnCloseModalMouseOut = () =>{
+        setAlteraCorBtnModal('000000')
+  }
+
  
   return (
     <div className={`flex flex-col justify-center items-center gap-5`}>
-        <form className={`${styles.formulario} container mr-auto ml-auto gap-5 flex flex-col justify-center items-center h-screen w-screen bg-orange-100`}>
+        <form className={`${styles.formulario} container mr-auto ml-auto gap-5 flex flex-col justify-center items-center h-screen w-screen `}>
             <div className={`flex justify-between items-center gap-5 ${styles.formContent}`}>
-                <div className={`${styles.formCol1} border p-2 rounded-lg bg-orange-100 `}>
-                    <div className={`${styles.formControl}`}>
+                <div className={`${styles.formCol1} p-2  `}>
+                    <div className={`${styles.formControl} w-full`}>
                         <input 
                             type="text"
-                            className={`w-full`}  
+                            className={` rounded-sm shadow-orange-100 shadow-md `}  
                             value={novaNota.campanha} 
                             placeholder={`Campanha`} 
                             onChange={(e) => setNovaNota({...novaNota, campanha: e.target.value})}
@@ -163,7 +145,7 @@ export default function FireStore() {
 
                         <input 
                             type="text"
-                            className={`w-full`}  
+                            className={`rounded-sm shadow-orange-100 shadow-md`}  
                             value={novaNota.tipo}   
                             placeholder={`Tipo`}    
                             onChange={(e) => setNovaNota({...novaNota, tipo: e.target.value})}  
@@ -171,7 +153,7 @@ export default function FireStore() {
 
                         <input 
                             type="number"
-                            className={`w-full`}  
+                            className={`rounded-sm shadow-orange-100 shadow-md`}  
                             value={novaNota.pppi} 
                             placeholder={`PP/PI`} 
                             onChange={(e) => setNovaNota({...novaNota, pppi: e.target.value})}
@@ -179,7 +161,7 @@ export default function FireStore() {
 
                         <input 
                             type="text"
-                            className={`w-full`}  
+                            className={`rounded-sm shadow-orange-100 shadow-md`}  
                             value={novaNota.fornecedor} 
                             placeholder={`Fornecedor`} 
                             onChange={(e) => setNovaNota({...novaNota, fornecedor: e.target.value})}
@@ -187,7 +169,7 @@ export default function FireStore() {
 
                         <input 
                             type="text"
-                            className={`w-full`}  
+                            className={`rounded-sm shadow-orange-100 shadow-md`}  
                             value={novaNota.descricao} 
                             placeholder={`Descrição`} 
                             onChange={(e) => setNovaNota({...novaNota, descricao: e.target.value})}
@@ -196,25 +178,25 @@ export default function FireStore() {
                     </div> 
                 </div>
                     
-                <div className={`${styles.formCol1} border p-2 rounded-lg bg-orange-100`}>
-                    <div className={`${styles.formControl}`}>
+                <div className={`${styles.formCol1}  p-2 `}>
+                    <div className={`${styles.formControl} w-full`}>
                         <input 
                             type="number"
-                            className={`w-full`} 
+                            className={`rounded-sm shadow-orange-100 shadow-md`} 
                             value={novaNota.valor} 
                             placeholder={`Valor`} 
                             onChange={(e) => setNovaNota({...novaNota, valor: e.target.value})}
                         />
                         <input 
                             type="text"
-                            className={`w-full`}  
+                            className={`rounded-sm shadow-orange-100 shadow-md`}  
                             value={novaNota.notafiscal} 
                             placeholder={`Nota Fiscal`} 
                             onChange={(e) => setNovaNota({...novaNota, notafiscal: e.target.value})}
                             />
                         <input 
                             type="number"
-                            className={`w-full`}  
+                            className={`rounded-sm shadow-orange-100 shadow-md`}  
                             value={novaNota.processo} 
                             placeholder={`Processo`} 
                             onChange={(e) => setNovaNota({...novaNota, processo: e.target.value})}
@@ -223,7 +205,7 @@ export default function FireStore() {
 
                     <div className={`${styles.formControl}`}>
                         <select
-                            className={`w-full`} 
+                            className={`rounded-sm shadow-orange-100 shadow-md mb-3`} 
                             value={novaNota.statusNota} 
                             onChange={(e) => setNovaNota({...novaNota, statusNota: e.target.value})}
                         >
@@ -261,7 +243,7 @@ export default function FireStore() {
                 </div> 
             </div>
                     
-            <div className={`${styles.formSubmit}`}>
+            <div className={`${styles.formSubmit} rounded-md`}>
                 <input 
                     type="submit" 
                     value="Adicionar Nota" 
@@ -278,7 +260,7 @@ export default function FireStore() {
                 <caption className="caption-top">
                     Informações das Notas Fiscais.
                 </caption>
-                    <thead className={`bg-gray-50 border-b-2 border-gray-200`}>
+                    <thead className={`bg-gray-50 border-b-2`}>
                         <tr>
                             <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Campanha</th>
                             <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Tipo</th>
@@ -412,7 +394,7 @@ export default function FireStore() {
                                         width="20" 
                                         height="20" 
                                         src="https://img.icons8.com/ios-filled/20/ffffff/delete-sign--v1.png" 
-                                        alt="delete-sign--v1" 
+                                        alt="delete-sign--v1"
                                     />
                                 </button>
                             </div>
@@ -443,10 +425,10 @@ export default function FireStore() {
       {isModalOpen && (
         <div
           id="modal"
-          className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-orange-300 bg-opacity-50 transform scale-100 transition-transform duration-300"
+          className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center backdrop-blur-sm bg-orange-300 bg-opacity-50 transform scale-100 transition-transform duration-300"
         >
           {/* Modal content */}
-          <div className={`bg-white w-1/2 h-1/2 p-12 ${styles.modalContent}`}>
+          <div className={`bg-white w-[700px] h-[450px] p-12 rounded-lg ${styles.modalContent}`}>
             {/* Close modal button */}
             <button
               id="closebutton"
@@ -455,48 +437,48 @@ export default function FireStore() {
               onClick={closeModal}
             >
               {/* Hero icon - close button */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+            <Image 
+                width="25" 
+                height="25" 
+                src={`https://img.icons8.com/ios-filled/50/${alteraCorBtnModal}/delete-sign--v1.png`}
+                alt="delete-sign--v1" 
+                onMouseEnter={handleAlteraCorBtnCloseModal} 
+                onMouseLeave={handleAlteraCorBtnCloseModalMouseOut}
+                className={`${styles.btnCloseModal}`}
+            />
             </button>
             {/* Test content */}
-            <form className={`container mr-auto ml-auto gap-5`}>
-                <div className={`columns-1 gap-5 md:columns-2`}>
+            <form className={`container mr-auto gap-5`}>
+                <div className={`columns-1 gap-5 m-auto md:columns-2 `}>
                     <div className={`${styles.formCol1}`}>
-                        <div className={`${styles.formControl}`}>
+                        <div className={`${styles.formControl} w-full `}>
                             <input 
                                 type="text" value={updatedNota.campanha || ''} 
+                                className={`rounded-sm shadow-orange-100 shadow-md `}
                                 placeholder={`Campanha`} 
                                 onChange={(e) => setUpdatedNota({...updatedNota, campanha: e.target.value})}
                             />
                             <input  
                                 type="text" value={updatedNota.tipo || ''} 
+                                className={`rounded-sm shadow-orange-100 shadow-md `}
                                 placeholder={`Tipo`} 
                                 onChange={(e) => setUpdatedNota({...updatedNota, tipo: e.target.value})}
                             />
                             <input 
-                                type="number" 
+                                type="number"
+                                className={`rounded-sm shadow-orange-100 shadow-md `} 
                                 value={updatedNota.pppi || ''} placeholder={`PP/PI`} 
                                 onChange={(e) => setUpdatedNota({...updatedNota, pppi: e.target.value})}
                             />
                             <input 
                                 type="text" value={updatedNota.fornecedor || ''} 
+                                className={`rounded-sm shadow-orange-100 shadow-md `}
                                 placeholder={`Fornecedor`} 
                                 onChange={(e) => setUpdatedNota({...updatedNota, fornecedor: e.target.value})}
                             />
                             <input 
-                                type="text" value={updatedNota.descricao || ''} 
+                                type="text" value={updatedNota.descricao || ''}
+                                className={`rounded-sm shadow-orange-100 shadow-md `} 
                                 placeholder={`Descrição`} 
                                 onChange={(e) => setUpdatedNota({...updatedNota, descricao: e.target.value})}
                             />
@@ -504,58 +486,68 @@ export default function FireStore() {
                     </div>
                         
                     <div className={`${styles.formCol1} mt-[10px]`}>
-                        <div className={`${styles.formControl}`}>
+                        <div className={`${styles.formControlModal}`}>
                             <input 
-                                type="number" value={updatedNota.valor || ''} 
+                                type="number" value={updatedNota.valor || ''}
+                                className={`rounded-sm shadow-orange-100 shadow-md w-[150px]`} 
                                 placeholder={`Valor`} 
                                 onChange={(e) => setUpdatedNota({...updatedNota, valor: e.target.value})}
                             />
                             <input 
                                 type="text" 
-                                value={updatedNota.notafiscal || ''} 
+                                value={updatedNota.notafiscal || ''}
+                                className={`rounded-sm shadow-orange-100 shadow-md w-[150px]`} 
                                 placeholder={`Nota Fiscal`} 
                                 onChange={(e) => setUpdatedNota({...updatedNota, notafiscal: e.target.value})}
                             />
                             <input 
                                 type="number" 
-                                value={updatedNota.processo || ''} 
+                                value={updatedNota.processo || ''}
+                                className={`rounded-sm shadow-orange-100 shadow-md w-[150px]`} 
                                 placeholder={`Processo`} 
                                 onChange={(e) => setUpdatedNota({...updatedNota, processo: e.target.value})}
                             />
                         </div>
-                        <select value={updatedNota.statusNota || ''} onChange={(e) => setUpdatedNota({...updatedNota, statusNota: e.target.value})}>
+                        <select 
+                            value={updatedNota.statusNota || ''} 
+                            onChange={(e) => setUpdatedNota({...updatedNota, statusNota: e.target.value})}
+                            className={`rounded-sm shadow-orange-100 shadow-md w-[150px] ${styles.selectModal}`}
+                        >
                             <option value="aguardando">Aguardando Nota</option>
                             <option value="enviada">Nota Enviada</option>
                             <option value="emandamento">Em Andamento</option>
                             <option value="concluido">Concluído</option>
                             <option value="naoenviada">Não Enviada</option>
                         </select>
-                        <div>
-                            <input 
-                                type="checkbox" 
-                                name="Pago" 
-                                value={updatedNota.pagoPrefeitura} 
-                                id="pagoPrefeitura" 
-                                checked={updatedNota.pagoPrefeitura} 
-                                onChange={(e) => setUpdatedNota({...updatedNota, pagoPrefeitura: e.target.checked})} 
-                            />
-                            <label htmlFor="pagoPrefeitura">Pago Prefeitura</label>
+                        <div className={`flex flex-col justify-start mr-auto`}>
+                            <div>
+                                <input 
+                                    type="checkbox" 
+                                    name="Pago" 
+                                    value={updatedNota.pagoPrefeitura} 
+                                    id="pagoPrefeitura" 
+                                    checked={updatedNota.pagoPrefeitura} 
+                                    onChange={(e) => setUpdatedNota({...updatedNota, pagoPrefeitura: e.target.checked})} 
+                                />
+                                <label htmlFor="pagoPrefeitura">Pago Prefeitura</label>
+                            </div>
+                            <div>
+                                <input 
+                                    type="checkbox" 
+                                    name="Pago" 
+                                    value={updatedNota.pagoFornecedor} 
+                                    id="pagoFornecedor" 
+                                    checked={updatedNota.pagoFornecedor} 
+                                    onChange={(e) => setUpdatedNota({...updatedNota, pagoFornecedor: e.target.checked})} 
+                                />
+                                <label htmlFor="pagoFornecedor">Pago Fornecedor/Veículo</label>
+                            </div>
                         </div>
-                        <div>
-                            <input 
-                                type="checkbox" 
-                                name="Pago" 
-                                value={updatedNota.pagoFornecedor} 
-                                id="pagoFornecedor" 
-                                checked={updatedNota.pagoFornecedor} 
-                                onChange={(e) => setUpdatedNota({...updatedNota, pagoFornecedor: e.target.checked})} 
-                            />
-                            <label htmlFor="pagoFornecedor">Pago Fornecedor/Veículo</label>
-                        </div>
+                        
                     </div> 
                 </div>
                         
-                <div className={`${styles.formSubmit}`}>
+                <div className={`${styles.formSubmit} rounded-lg`}>
                     <input 
                         type="submit" 
                         value="Atualizar Nota" 

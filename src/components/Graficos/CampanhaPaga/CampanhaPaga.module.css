@@ -2,3 +2,14 @@
     width: 800px; 
 }
 
+@media (max-width: 995px) {
+    .graphArea{
+        width: 500px;
+    }
+}
+
+@media (max-width:500px) {
+    .graphArea{
+       width: 300px;
+    }
+ }

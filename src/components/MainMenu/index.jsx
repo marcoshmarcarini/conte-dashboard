@@ -2,6 +2,7 @@ import styles from '@/components/MainMenu/MainMenu.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import LoginBtn from '../LoginBtn'
 
 export default function MainMenu(){
     const [altura, setAltura] = useState('80px')
@@ -46,6 +47,7 @@ export default function MainMenu(){
                         <li><Link href={home} onClick={handleAbre} style={{color:corTexto}}>Home</Link></li>
                         <li><Link href={dashboard} style={{color:corTexto}}>Dashboard</Link></li>
                         <li><Link href={notasFiscais} onClick={handleEncurta} style={{color:corTexto}}>Notas Fiscais</Link></li>
+                        <li><LoginBtn /></li>
                     </ul>
                 </div>
             </nav>

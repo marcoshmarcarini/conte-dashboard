@@ -97,6 +97,7 @@ export default function GraficoPolar(){
         plugins: {
             legend: {
             position: 'top',
+            display: false
             },
             title: {
             display: true,
