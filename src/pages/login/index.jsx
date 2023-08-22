@@ -1,22 +1,25 @@
 import { signIn, useSession, getSession } from "next-auth/react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import styles from "@/styles/Login.module.css"
 
 
 export default function login(){
-    const [user, setUser] = useState('')
-    const [password, setPassword] = useState('')
+    const [userInfo, setUserInfo] = useState({email: "", password: ""})
     const [pwd, setPwd] = useState('password')
     const [visible, setVisible] = useState('block')
     const [hide, setHide] = useState('none')
     
     const {data: session} = useSession()
 
-    const onSubmit = (e) =>{
+    const onSubmit = async (e) =>{
         e.preventDefault()
         
-        signIn('credentials')
+        const res = await signIn('credentials',{
+            email: userInfo.email,
+            password: userInfo.password,
+        })
+        console.log(res)
     }
 
     const handleVisible = () => {
@@ -41,23 +44,24 @@ export default function login(){
                 <form 
                     onSubmit={onSubmit} 
                     className={`${styles.formularioLogin}`}
+                    method="Post"
                 >
                     <div className={styles.formControl}>
                         <input 
                             type="email" 
                             name="email" 
-                            value={user} 
+                            value={userInfo.email} 
                             placeholder="E-mail" 
-                            onChange={(e) => setUser(e.target.value)}
+                            onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}
                         />
                     </div>
                     <div className={styles.formControl}>
                         <input 
                             type={pwd} 
                             name="password" 
-                            value={password} 
+                            value={userInfo.password} 
                             placeholder="Senha"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}
                         />
                         <div className={styles.pwdVisibleOrHide}>
                             <Image 

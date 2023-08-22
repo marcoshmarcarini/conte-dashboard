@@ -5,12 +5,12 @@ import { getFirestore} from "firebase/firestore";
 
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyDSan1kFfw8mJy0aDXp-Y5riCtV92j7KfQ',
-    authDomain: 'notas-conte.firebaseapp.com',
-    projectId: 'notas-conte',
-    storageBucket: 'notas-conte.appspot.com',
-    messagingSenderId: '462776862842',
-    appId: '1:462776862842:web:b8120200cce385289353c3'
+    apiKey: process.env.FIRESTORE_API_KEY,
+    authDomain: process.env.FIRESTORE_AUTH_DOMAIN,
+    projectId: process.env.FIRESTORE_PROJECT_ID,
+    storageBucket: process.env.FIRESTORE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIRESTORE_MESSAGING_SENDER_ID,
+    appId: process.env.FIRESTORE_APP_ID
 }
 
 const app = initializeApp(firebaseConfig);

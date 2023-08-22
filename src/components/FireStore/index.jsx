@@ -281,7 +281,7 @@ export default function FireStore() {
                     <tbody className={`divide-y divide-gray-100`}>
                         {notas.map((nota, id) => (
 
-                            <tr key={id} className={`${id % 2 == 0 ? 'bg-white text-gray-700' : 'bg-gray-400 text-white'} ${console.log(id)}`}>
+                            <tr key={id} className={`${id % 2 == 0 ? 'bg-white text-gray-700' : 'bg-gray-400 text-white'}`}>
                                 <td className={`p-3 text-sm whitespace-wrap text-center`}>{nota.campanha}</td>
                                 <td className={`p-3 text-sm whitespace-wrap text-center`}>{nota.tipo}</td>
                                 <td className={`p-3 text-sm whitespace-wrap text-center`}>{nota.pppi}</td>
