@@ -26,7 +26,7 @@ export const authOptions = {
         })
     ],
     secret: process.env.SECRET,
-    callbacks: {
+    /* callbacks: {
         jwt: async ({ token, user}) => {
             if(user){
                 token.id = user.id
@@ -43,7 +43,7 @@ export const authOptions = {
     jwt: {
         secret: process.env.SECRET,
         encryption: true,
-    }
+    } */
 }
 
 export default NextAuth(authOptions)
