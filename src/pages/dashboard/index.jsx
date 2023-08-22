@@ -11,15 +11,15 @@ export default function dashboard(){
     return(
         <>
             <MainMenu />
-            <div className={`py-[25px]`}>
-                <h2 className={`py-3 text-center text-xl`}>Gráficos</h2>
-                <div className={`${styles.paginaDashboard}`}>
-                    <GraficoBar />
-                    <GraficoDonut />
-                    <CampanhaPaga />
-                    <GraficoPolar />
+                <div className={`py-[25px]`}>
+                    <h2 className={`py-3 text-center text-xl`}>Gráficos</h2>
+                    <div className={`${styles.paginaDashboard}`}>
+                        <GraficoBar />
+                        <GraficoDonut />
+                        <CampanhaPaga />
+                        <GraficoPolar />
+                    </div>
                 </div>
-            </div>
             <Rodape />
         </>
     )
