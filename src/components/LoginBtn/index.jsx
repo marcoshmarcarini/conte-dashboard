@@ -7,7 +7,7 @@ export default function LoginBtn() {
 
   const username = session?.user?.name;
 
-  if (session.user.email) {
+  if (session?.user?.email) {
     return (
       <>
         <div className={`flex items-center gap-3`}>
