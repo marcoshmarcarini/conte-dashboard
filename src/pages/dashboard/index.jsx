@@ -4,7 +4,7 @@ import GraficoDonut from "@/components/Graficos/GraficoDonut";
 import CampanhaPaga from "@/components/Graficos/CampanhaPaga";
 import styles from '@/styles/Dashboard.module.css';
 import GraficoPolar from "@/components/Graficos/GraficoPolar";
-import Rodape from "@/components/Rodape/index.jsx";
+import Rodape from "@/components/Rodape";
 
 
 export default function dashboard(){

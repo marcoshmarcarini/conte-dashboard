@@ -3,7 +3,7 @@
 import { Inter } from 'next/font/google'
 import FireStore from '@/components/FireStore'
 import MainMenu from '@/components/MainMenu'
-import Rodape from '@/components/Rodape/rodape'
+import Rodape from '@/components/Rodape'
 import { getSession, useSession } from 'next-auth/react'
 
 const inter = Inter({ subsets: ['latin'] })
