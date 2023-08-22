@@ -26,7 +26,7 @@ export const authOptions = {
         })
     ],
     secret: process.env.SECRET,
-    calbacks: {
+    callbacks: {
         jwt: async ({ token, user}) => {
             if(user){
                 token.id = user.id
@@ -42,7 +42,7 @@ export const authOptions = {
     },
     jwt: {
         secret: process.env.SECRET,
-        ecryption: true,
+        encryption: true,
     }
 }
 
