@@ -2,7 +2,7 @@
 import React,{useState, useEffect, useRef} from 'react'
 import {collection, getDocs} from 'firebase/firestore'
 import { db } from '@/utils/firebase'
-import styles from './GraficoBar.module.css'
+import styles from './GraficoBarHorizontal.module.css'
 import {Chart as ChartJS, CategoryScale, LinearScale,BarElement, Title, Tooltip, Legend} from 'chart.js'
 import {Bar} from "react-chartjs-2"
 
@@ -15,7 +15,7 @@ ChartJS.register(
     Legend,
 )
 
-export default function Grafico(){
+export default function GraficoBarHorizontal(){
     const [graph, setGraph] = useState([])
     
 
@@ -29,32 +29,29 @@ export default function Grafico(){
             })
             setGraph(snapData)
         }
-      
-        
-        graphData()
     
+        graphData()
 
     }, [])
     
     const options = {
+        indexAxis: 'y',
         responsive: true,
+        maintainAspectRatio: true,
         plugins: {
             legend: {
-            position: 'top',
+            position: 'left',
+            display: false,
+            labels: {
+                display: false
+            }
             },
             title: {
             display: true,
-            text: 'Valor',
-            },
-            scales:{
-                x: {
-                    border: {
-                      color: 'red'
-                    },
-                }
-            },
-            
-        },   
+            text: 'Campanha x Valor',
+            },  
+        },
+        
     }
 
     //Gráfico de Barra
@@ -65,7 +62,17 @@ export default function Grafico(){
         labels,
         datasets: [{
             label: 'Valor',
-            data: value
+            data: value,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)', 
+                'rgba(54, 162, 235, 0.2)', 
+                'rgba(153, 102, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(153, 102, 255, 1)',
+            ],
         }]
     }
 

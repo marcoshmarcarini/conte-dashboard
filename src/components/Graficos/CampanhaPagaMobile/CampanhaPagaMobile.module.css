@@ -1,8 +1,8 @@
 /* .graphArea{
-    width: 600px;
-} */
+    width: 800px; 
+}
 
-/* @media (max-width: 995px) {
+@media (max-width: 995px) {
     .graphArea{
         width: 500px;
     }

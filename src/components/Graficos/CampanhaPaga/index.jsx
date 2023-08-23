@@ -97,7 +97,7 @@ export default function CapanhasPagas(){
 
     return(
         <>
-            <div>
+            <div className={`container`}>
                 <div className={styles.graphArea}>
                     <Bar options={options} data={data} />
                 </div>

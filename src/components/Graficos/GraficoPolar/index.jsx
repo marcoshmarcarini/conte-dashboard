@@ -114,13 +114,10 @@ export default function GraficoPolar(){
         },   
     }
 
-    
-
-
 
     return(
         <>
-            <div>
+            <div className={`container`}>
                 <div className={styles.graphArea}>
                     <PolarArea options={options} data={data} />
                 </div>
