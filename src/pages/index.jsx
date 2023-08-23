@@ -6,6 +6,7 @@ import MainMenu from '@/components/MainMenu'
 import Rodape from '@/components/Rodape'
 import { getSession, useSession } from 'next-auth/react'
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -13,7 +14,7 @@ export default function Home() {
   
     return(
       <>
-        <MainMenu />
+        <MainMenu />    
         <FireStore />
         <Rodape />
       </>

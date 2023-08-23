@@ -5,49 +5,61 @@ import { useEffect, useState } from 'react'
 import LoginBtn from '../LoginBtn'
 
 export default function MainMenu(){
-    const [altura, setAltura] = useState('80px')
-    const [logo, setLogo] = useState(150)
-    const [corLogo, setCorLogo] = useState('none')
-    const [fundo, setFundo] = useState('#ffffff')
-    const [corTexto, setCorTexto] = useState('#000')
+    const [menuStyles, setMenuStyles] = useState({
+        altura: '80px', logo: 150, corLogo: 'none',
+        fundo: '#ffffff', corTexto: '#000000'
+    })
     const home = '/'
     const dashboard = '/dashboard'
     const notasFiscais = '/#notas-fiscais'
+    
+
+    
 
     useEffect(() => {
         handleEncurta
-        
     }, [])
     
     const handleEncurta = () =>{
-        setAltura('50px')
-        setFundo('#ff8112')
-        setCorTexto('#ffffff')
-        setCorLogo('brightness(0) invert(1) sepia(0) saturate(0) hue-rotate(0deg)')
-        setLogo(100)
+        setMenuStyles({
+            altura: '50px', logo: 100, fundo: '#ff8112', corTexto: '#ffffff',
+            corLogo: 'brightness(0) invert(1) sepia(0) saturate(0) hue-rotate(0deg)',
+        })
     }
 
     const handleAbre = () =>{
-        setAltura('80px')
-        setFundo('#ffffff')
-        setCorTexto('#000')
-        setCorLogo('none')
-        setLogo(150)
-        
+        setMenuStyles({
+            altura: '80px', logo: 150, corLogo: 'none',
+            fundo: '#ffffff', corTexto: '#000000'
+        })
     }
+
+    /* Comportamento do botão do menu */
+    
+    
+    
+
+
+
+
 
     return(
         <>
-            <nav className={styles.mainMenu} style={{height:altura, backgroundColor:fundo}}>
-                <div className={styles.navBrand} style={{filter:corLogo}}>
-                    <Image src={`img/logo-conte.svg`} width={logo} height={logo} alt={`Conteúdo Gestão de Ideias`} />
+            <nav className={styles.mainMenu} style={{height:menuStyles.altura, backgroundColor:menuStyles.fundo}}>
+                <div className={styles.navBrand} style={{filter:menuStyles.corLogo}}>
+                    <Image src={`img/logo-conte.svg`} width={menuStyles.logo} height={menuStyles.logo} alt={`Conteúdo Gestão de Ideias`} />
                 </div>
-                <div className={styles.listMenu}>
+                <div className={`${styles.listMenu}`}>
                     <ul>
-                        <li><Link href={home} onClick={handleAbre} style={{color:corTexto}}>Home</Link></li>
-                        <li><Link href={dashboard} style={{color:corTexto}}>Dashboard</Link></li>
-                        <li><Link href={notasFiscais} onClick={handleEncurta} style={{color:corTexto}}>Notas Fiscais</Link></li>
+                        <li><Link href={home} onClick={handleAbre} style={{color:menuStyles.corTexto}}>Lançamentos</Link></li>
+                        <li><Link href={dashboard} style={{color:menuStyles.corTexto}}>Dashboard</Link></li>
+                        <li><Link href={notasFiscais} onClick={handleEncurta} style={{color:menuStyles.corTexto}}>Notas Fiscais</Link></li>
                         <li><LoginBtn /></li>
+                    </ul>
+                </div>
+                <div className={`${styles.loginBtnMobile}`}>
+                    <ul>
+                        <li><LoginBtn/></li>
                     </ul>
                 </div>
             </nav>

@@ -131,7 +131,9 @@ export default function FireStore() {
  
   return (
     <div className={`flex flex-col justify-center items-center gap-5`}>
+        
         <form className={`${styles.formulario} container mr-auto ml-auto gap-5 flex flex-col justify-center items-center h-screen w-screen `}>
+            <h2 className={`text-center font-bold text-lg`}>Adicionar Nota</h2>
             <div className={`flex justify-between items-center gap-5 ${styles.formContent}`}>
                 <div className={`${styles.formCol1} p-2  `}>
                     <div className={`${styles.formControl} w-full`}>

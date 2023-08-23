@@ -3,7 +3,6 @@ import { useState } from "react"
 import Image from "next/image"
 import styles from "@/styles/Login.module.css"
 
-
 export default function login(){
     const [userInfo, setUserInfo] = useState({email: "", password: ""})
     const [pwd, setPwd] = useState('password')
@@ -11,6 +10,7 @@ export default function login(){
     const [hide, setHide] = useState('none')
     
     const {data: session} = useSession()
+
 
     const onSubmit = async (e) =>{
         e.preventDefault()

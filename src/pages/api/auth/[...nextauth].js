@@ -1,7 +1,6 @@
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth/next"
 import GoogleProvider from "next-auth/providers/google"
-import CredentialsProvider  from "next-auth/providers/credentials";
-import { signIn } from "next-auth/react";
+import CredentialsProvider  from "next-auth/providers/credentials"
  
 export const authOptions = {
     providers: [
@@ -16,27 +15,23 @@ export const authOptions = {
                 }
             }
         }),
-        /* CredentialsProvider({
-            name: 'NextAuthCredentials',
-            credentials: {
-                
+        {
+            id: "google",
+            name: "Google",
+            type: "oauth",
+            wellKnown: "https://accounts.google.com/.well-known/openid-configuration",
+            authorization: { params: { scope: "openid email profile" } },
+            idToken: true,
+            checks: ["pkce", "state"],
+            profile(profile) {
+              return {
+                id: profile.sub,
+                name: profile.name,
+                email: profile.email,
+                image: profile.picture,
+              }
             },
-            async authorize(credentials, req){
-                const res = await fetch("http://localhost:3000/api/users", {
-                    method: 'POST',
-                    body: JSON.stringify(credentials),
-                    headers: { "Content-Type": "application/json" }
-                  })
-                  const user = await res.json()
-            
-                  // If no error and we have user data, return it
-                  if (res.ok && user) {
-                    return user
-                  }
-                  // Return null if user data could not be retrieved
-                  return null
-            }
-        }) */
+          }
     ],
     secret: process.env.SECRET,
     callbacks: {
@@ -49,24 +44,7 @@ export const authOptions = {
             }
         }
     }
-    /* callbacks: {
-        jwt: async ({ token, user}) => {
-            if(user){
-                token.id = user.id
-            }
-            return token
-        },
-        session: ({session, token}) => {
-            if(token) {
-                session.id = token.id
-            }
-            return session
-        }
-    },
-    jwt: {
-        secret: process.env.SECRET,
-        encryption: true,
-    } */
+    
 }
 
 export default NextAuth(authOptions)
