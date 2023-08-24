@@ -11,37 +11,35 @@ export const authOptions = {
                 password: {label: "Password", type: "password"}
             },
             async authorize(credentials, req){
-                if(
-                    (credentials.email === "marcoshmarcarini@hotmail.com"   && credentials.password === "#r4e3w2q1")      ||
-                    (credentials.email === "thais@comconteudo.com.br"       && credentials.password === "conteudo@90")    ||
-                    (credentials.email === "junior@comconteudo.com.br"      && credentials.password === "conteudo@90")    ||
-                    (credentials.email === "gustavo@comconteudo.com.br"     && credentials.password === "conteudo@90") 
-                ){
+                if((credentials.email === "marcoshmarcarini@hotmail.com" && credentials.password === "#r4e3w2q1")){
                     return {
                         id: 1,
                         name: "Marcos Henrique",
                         email: "marcoshmarcarini@hotmail.com"
-                    },
-                    {
-                        id: 2,
-                        name: "Thais Souza",
-                        email: "thais@comconteudo.com.br",
-                        image: "/img/profiles/thais.jpg"
-                    },
-                    {
+                    }
+                    
+                } else if((credentials.email === "thais@comconteudo.com.br" && credentials.password === "conteudo@90")){
+                    return {
+                            id: 2,
+                            name: "Thais Souza",
+                            email: "thais@comconteudo.com.br",
+                            image: "/img/profiles/thais.jpg"
+                    }
+                    
+                } else if((credentials.email === "junior@comconteudo.com.br" && credentials.password === "conteudo@90")){
+                    return{
                         id: 3,
                         name: "Junior",
                         email: "junior@comconteudo.com.br",
                         image: '/img/profiles/junior.png'
-                    },
-                    {
+                    }
+                } else if((credentials.email === "gustavo@comconteudo.com.br" && credentials.password === "conteudo@90")){
+                    return{
                         id:4,
                         name: "Gustavo Coelho",
                         email: "gustavo@comconteudo.com.br",
-                        image: "/img/profiles/gustavo.jpg"
+                        image: "/img/profiles.gustavo.jpg"
                     }
-                } else{
-                    return null
                 }
             }
         }),
@@ -72,3 +70,35 @@ export const authOptions = {
 }
 
 export default NextAuth(authOptions)
+
+
+/* 
+
+(credentials.email === "thais@comconteudo.com.br" && credentials.password === "conteudo@90")    ||
+                    (credentials.email === "junior@comconteudo.com.br" && credentials.password === "conteudo@90")   ||
+                    (credentials.email === "gustavo@comconteudo.com.br" && credentials.password === "conteudo@90") 
+
+
+
+
+
+{
+                        id: 2,
+                        name: "Thais Souza",
+                        email: "thais@comconteudo.com.br",
+                        image: "/img/profiles/thais.jpg"
+                    },
+                    {
+                        id: 3,
+                        name: "Junior",
+                        email: "junior@comconteudo.com.br",
+                        image: '/img/profiles/junior.png'
+                    },
+                    {
+                        id:4,
+                        name: "Gustavo Coelho",
+                        email: "gustavo@comconteudo.com.br",
+                        image: "/img/profiles.gustavo.jpg"
+                    }
+
+*/
