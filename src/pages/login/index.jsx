@@ -88,7 +88,13 @@ export default function login(){
                         value={`Entrar`}
                         className={`${styles.btnSubmitLogin}`}
                     />
+
+                    {/* <div>
+                        <p>Acesse rapidamente</p>
+                        <button onClick={() => signIn("google")}>Entrar</button>
+                    </div> */}
                 </form>
+                
             </div>
         </>
     )   
