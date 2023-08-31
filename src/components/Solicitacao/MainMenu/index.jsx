@@ -2,7 +2,7 @@ import styles from '@/components/MainMenu/MainMenu.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import LoginBtn from '../LoginBtn'
+import LoginBtn from '../../LoginBtn'
 
 export default function MainMenu(){
     const [menuStyles, setMenuStyles] = useState({

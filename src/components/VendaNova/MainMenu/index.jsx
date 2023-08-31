@@ -2,16 +2,16 @@ import styles from '@/components/MainMenu/MainMenu.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import LoginBtn from '../LoginBtn'
+import LoginBtn from '../../LoginBtn'
 
 export default function MainMenu(){
     const [menuStyles, setMenuStyles] = useState({
         altura: '80px', logo: 150, corLogo: 'none',
         fundo: '#ffffff', corTexto: '#000000'
     })
-    const home = '/'
-    const dashboard = '/dashboard'
-    const notasFiscais = '/#notas-fiscais'
+    const home = '/vendanova'
+    const dashboard = '/vendanova/dashboard'
+    const notasFiscais = '/vendanova#notas-fiscais'
     
 
     useEffect(() => {

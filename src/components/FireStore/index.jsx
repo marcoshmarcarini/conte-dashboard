@@ -5,6 +5,7 @@ import { db } from '../../utils/firebase';
 import { addDoc, collection, deleteDoc, getDocs, doc, orderBy, query, updateDoc } from 'firebase/firestore';
 
 import styles from './FireStore.module.css';
+import ExportarDados from "../ExportarDados";
 
 
 export default function FireStore() {
@@ -24,6 +25,7 @@ export default function FireStore() {
   });
   const [alteraCorBtnModal, setAlteraCorBtnModal] = useState('000000')
 
+  //Adicionar Nova Nota
   const AddNota = async (e) => {
     e.preventDefault();
 
@@ -257,9 +259,9 @@ export default function FireStore() {
 
         <div className={`container ${styles.notasList} flex flex-col gap-5 justify-center items-center `} id={`notas-fiscais`}>
             <h2 className={`text-center font-bold text-lg`}>Notas Fiscais</h2>
-                <div className={`overflow-auto rounded-lg shadow hidden lg:block transition`}>
-                <table className={`w-full`}>
-                <caption className="caption-top">
+                <div className={`overflow-auto rounded-lg shadow hidden lg:block transition pl-2 pr-2`}>
+                <table className={`w-full`} id={`tabela-dados`}>
+                <caption className={`caption-top mt-2`}>
                     Informações das Notas Fiscais.
                 </caption>
                     <thead className={`bg-gray-50 border-b-2`}>
@@ -275,8 +277,7 @@ export default function FireStore() {
                             <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Status</th>
                             <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Pago PMPK</th>
                             <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Pago For/Vei</th>
-                            <th className={`p-3 text-sm font-semibold tracking-wide text-center`}></th>
-                            <th className={`p-3 text-sm font-semibold tracking-wide text-center`}></th>
+                            <th className={`p-3 text-sm font-semibold tracking-wide text-center`} colSpan={2}><ExportarDados /></th>
                         </tr>
                     </thead>
                         
@@ -315,7 +316,7 @@ export default function FireStore() {
                                     }  
                                     </span> 
                                 </td>
-                                <td className={`p-3 text-sm whitespace-wrap text-center`}>{nota.pagoPrefeitura === true ? 'Sim' : 'Não' }</td>
+                                <td className={`p-3 text-sm whitespace-wrap text-center`}>{nota.pagoPrefeitura === true ? 'Sim' : 'Não'}</td>
                                 <td className={`p-3 text-sm whitespace-wrap text-center`}>{nota.pagoFornecedor === true ? 'Sim' : 'Não'}</td>
                                 <td>
                                     <button 
@@ -349,7 +350,8 @@ export default function FireStore() {
                         ))} 
                     </tbody>
                 </table>
-               </div> 
+               </div>
+               <div className={`lg:hidden`}><ExportarDados /></div> 
                <div className={`grid grid-cols-1 gap-4 lg:hidden transition`}>
                 {notas.map((nota, id) => (
                     <div key={id} className={`bg-white space-y-3 p-4 rounded-lg shadow`}>
@@ -563,5 +565,5 @@ export default function FireStore() {
     </div>   
         </div>
     </div>
-  );
+  )
 }

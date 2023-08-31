@@ -1,0 +1,22 @@
+.botaoExportar{
+    border: none;
+}
+
+.botaoExportar:hover{
+    animation: mexer 800ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes mexer {
+    0%{
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(-45deg);
+    }
+    75%{
+        transform: rotate(45deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+}

@@ -1,5 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore} from "firebase/firestore";
+import { initializeApp } from "firebase/app"
+import { getFirestore} from "firebase/firestore"
+import {getStorage} from "firebase/storage"
 
 //import 'firebase/firestore'
 
@@ -15,6 +16,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app)
-console.log(db)
+export const storage = getStorage(app)
+//export default app
+//console.log(db)
 //const notasCollection = collection(db, 'notas_fiscais')
 

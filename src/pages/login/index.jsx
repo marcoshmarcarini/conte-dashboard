@@ -1,7 +1,8 @@
 import { signIn, useSession, getSession } from "next-auth/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import styles from "@/styles/Login.module.css"
+import { useRouter } from "next/router"
 
 export default function login(){
     const [userInfo, setUserInfo] = useState({email: "", password: ""})
@@ -11,6 +12,8 @@ export default function login(){
     
     const {data: session} = useSession()
 
+    const router = useRouter()
+    
 
     const onSubmit = async (e) =>{
         e.preventDefault()
@@ -33,7 +36,6 @@ export default function login(){
         setHide('none')
     }
     
-
 
     return(
         <>
@@ -101,18 +103,32 @@ export default function login(){
 }
 
 export const getServerSideProps = async (context) => {
+    
     const session = await getSession(context)
-    if(session){
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
+   /* 
+        Com essa lógica, posso ir adicionando as rotas de cada cliente e criando para cada um uma 
+        rota e levando eles para cada uma que eu quero. E dando acesso diferente também. 
+   */ 
+   if(session){
+    const userEmail = session.user.email
+        if(userEmail === 'marcoshmarcarini@hotmail.com'){
+            return{
+                redirect: {
+                    destination: '/solicitacao',
+                    permanent: false
+                }
+            }
+        }else{
+            return{
+                redirect: {
+                    destination: '/',
+                    permanent: false
+                }
             }
         }
-    }
-    return {
-        props: {
-            session
-        }
-    }
+   }
+
+   return{
+        props: {session}
+   }
 }

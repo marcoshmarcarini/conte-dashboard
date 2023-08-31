@@ -15,7 +15,8 @@ export const authOptions = {
                     return {
                         id: 1,
                         name: "Marcos Henrique",
-                        email: "marcoshmarcarini@hotmail.com"
+                        email: "marcoshmarcarini@hotmail.com",
+                        image: '/img/profiles/junior.png'
                     }
                     
                 } else if((credentials.email === "thais@comconteudo.com.br" && credentials.password === "conteudo@90")){
@@ -70,35 +71,3 @@ export const authOptions = {
 }
 
 export default NextAuth(authOptions)
-
-
-/* 
-
-(credentials.email === "thais@comconteudo.com.br" && credentials.password === "conteudo@90")    ||
-                    (credentials.email === "junior@comconteudo.com.br" && credentials.password === "conteudo@90")   ||
-                    (credentials.email === "gustavo@comconteudo.com.br" && credentials.password === "conteudo@90") 
-
-
-
-
-
-{
-                        id: 2,
-                        name: "Thais Souza",
-                        email: "thais@comconteudo.com.br",
-                        image: "/img/profiles/thais.jpg"
-                    },
-                    {
-                        id: 3,
-                        name: "Junior",
-                        email: "junior@comconteudo.com.br",
-                        image: '/img/profiles/junior.png'
-                    },
-                    {
-                        id:4,
-                        name: "Gustavo Coelho",
-                        email: "gustavo@comconteudo.com.br",
-                        image: "/img/profiles.gustavo.jpg"
-                    }
-
-*/
