@@ -72,7 +72,7 @@ export default function FireStore() {
         campanha: '', tipo: '', pppi: '', dataVeiculacao: '',
         valor: '', notafiscal: '', 
         /* Anexos */
-        anexoNF: '', link: '',
+        anexoNF: [], link: '',
         /* Infos Bancárias */
         numBanco: '', agencia: '', conta: '', pix: '',
         });
