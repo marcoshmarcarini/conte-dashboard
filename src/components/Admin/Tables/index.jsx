@@ -113,27 +113,30 @@ export default function Tables(){
                                         }  
                                         </span> 
                                     </td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center flex gap-1 justify-center items-center `}>
+                                    <td 
+                                        className={` ${styles.tdAnexo}`}
+                                    >
                                         {solicitacao.anexoNF.map((anexo) => {
                                             return(
                                                 <Link
                                                     href={anexo.toString()}
                                                     key={anexo.id}
                                                     target="_blank"
+                                                    className={`${styles.linkAnexo}`}
                                                 >
                                                     <Image 
-                                                        width={20}
-                                                        height={20}
+                                                        width={30}
+                                                        height={30}
                                                         alt="document"
                                                         src={
-                                                            String(anexo).match(/.doc/)   ? `https://img.icons8.com/fluency-systems-filled/20/e67e22/ms-word.png` :
-                                                            String(anexo).match(/.docx/)  ? `https://img.icons8.com/fluency-systems-filled/20/e67e22/ms-word.png` :
-                                                            String(anexo).match(/.xlx/)   ? `https://img.icons8.com/ios-glyphs/20/e67e22/ms-excel.png` :
-                                                            String(anexo).match(/.xlxs/)  ? `https://img.icons8.com/ios-glyphs/20/e67e22/ms-excel.png` :
-                                                            String(anexo).match(/.pdf/)   ? `https://img.icons8.com/fluency-systems-filled/20/e67e22/pdf.png` :
-                                                            String(anexo).match(/.jpg/)   ? `https://img.icons8.com/sf-black-filled/20/e67e22/image.png` :
-                                                            String(anexo).match(/.png/)   ? `https://img.icons8.com/sf-black-filled/20/e67e22/image.png` :
-                                                            String(anexo).match(/.mp4/)   ? `https://img.icons8.com/fluency-systems-filled/20/e67e22/video.png` :
+                                                            String(anexo).match(/.doc/)   ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/ms-word.png` :
+                                                            String(anexo).match(/.docx/)  ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/ms-word.png` :
+                                                            String(anexo).match(/.xlx/)   ? `https://img.icons8.com/ios-glyphs/50/ffffff/ms-excel.png` :
+                                                            String(anexo).match(/.xlxs/)  ? `https://img.icons8.com/ios-glyphs/50/ffffff/ms-excel.png` :
+                                                            String(anexo).match(/.pdf/)   ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/pdf.png` :
+                                                            String(anexo).match(/.jpg/)   ? `https://img.icons8.com/sf-black-filled/50/ffffff/image.png` :
+                                                            String(anexo).match(/.png/)   ? `https://img.icons8.com/sf-black-filled/50/ffffff/image.png` :
+                                                            String(anexo).match(/.mp4/)   ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/video.png` :
                                                             ''
                                                         }           
                                                     />
