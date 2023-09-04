@@ -186,7 +186,14 @@ export default function Tables(){
                         <div key={id} className={`bg-white space-y-3 p-4 rounded-lg shadow`}>
                             <div className={`flex items-center space-x-2 text-sm`}>
                                 <div className={`font-bold text-orange-500`}>{solicitacao.campanha}</div>
-                                <div className={`text-gray-500`}>{solicitacao.pppi}</div>
+                                <div className={`text-gray-500 flex`}>
+                                    <Image width={20} height={20} src="https://img.icons8.com/fluency-systems-filled/20/e67e22/new-document.png" alt="new-document" />
+                                    {solicitacao.pppi}
+                                </div>
+                                <div className={`text-gray-500 flex`}>
+                                    <Image width={20} height={20} src="https://img.icons8.com/fluency-systems-filled/20/e67e22/calendar.png" alt="calendar" />
+                                    {solicitacao.dataVeiculacao}
+                                </div>
                                 <div>
                                     <span className={
                                         `
@@ -214,9 +221,40 @@ export default function Tables(){
                                 </div>
                                 
                             </div>
-                            <div className={`text-sm text-gray-700`}>{solicitacao.descricao}</div>
+                            
                             <div className={`text-sm font-medium text-black`}>R${Number(solicitacao.valor).toFixed(2).replace('.', ',')}</div>
+                            <div className={`text-sm text-gray-700`}><p>Clique nos ícones para baixar os anexos:</p></div>
                             <div className={`flex justify-end items-center`}>
+                                <div className={`flex mr-auto`}>
+                                        {solicitacao.anexoNF.map((anexo) => {
+                                            return(
+                                                <Link
+                                                    href={anexo.toString()}
+                                                    key={anexo.id}
+                                                    target="_blank"
+                                                    className={`${styles.linkAnexoMb}`}
+                                                >
+                                                    <Image 
+                                                        width={30}
+                                                        height={30}
+                                                        alt="document"
+                                                        src={
+                                                            String(anexo).match(/.doc/)   ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
+                                                            String(anexo).match(/.docx/)  ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
+                                                            String(anexo).match(/.xlx/)   ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
+                                                            String(anexo).match(/.xlxs/)  ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
+                                                            String(anexo).match(/.pdf/)   ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/pdf.png` :
+                                                            String(anexo).match(/.jpg/)   ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
+                                                            String(anexo).match(/.png/)   ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
+                                                            String(anexo).match(/.mp4/)   ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/video.png` :
+                                                            ''
+                                                        }           
+                                                    />
+                                                    
+                                                </Link>
+                                            )    
+                                        })}
+                                </div>
                                 <div>
                                     <button 
                                         type="button" 
