@@ -20,7 +20,9 @@ export default function FireStore() {
     /* Infos Bancárias */
     numBanco: '', agencia: '', conta: '', pix: '',
     /* Timestamp para facilitar a consulta */
-    timeStamp: null
+    timeStamp: null,
+    /* Status da nota */
+    status: ''
   })
 
   const [selectedFiles, setSelectedFiles] = useState([])
@@ -61,7 +63,9 @@ export default function FireStore() {
         numBanco: novaNota.numBanco, agencia: novaNota.agencia, 
         conta: novaNota.conta, pix: novaNota.pix,
         /* Timestamp para facilitar a consulta */
-        timeStamp: new Date()
+        timeStamp: new Date(),
+        /* Status da Nota */
+        status: 'Recebido'
       });
 
       setNovaNota({
