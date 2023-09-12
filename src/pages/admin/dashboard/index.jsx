@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from "react";
-import MainMenu from "@/components/MainMenu";
+import MainMenu from "@/components/Admin/MainMenu";
 import GraficoBar from "@/components/Graficos/GraficoBar";
 import GraficoDonut from "@/components/Graficos/GraficoDonut";
 import CampanhaPaga from "@/components/Graficos/CampanhaPaga";

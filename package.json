@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "autoprefixer": "10.4.14",
+    "axios": "^1.5.0",
     "chart.js": "^4.3.3",
     "faker": "^5.5.3",
     "firebase": "^10.1.0",
@@ -19,6 +21,7 @@
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
+    "sendgrid": "^5.2.3",
     "styled-components": "^6.0.7",
     "table-export": "^1.0.2",
     "tailwindcss": "3.3.3"

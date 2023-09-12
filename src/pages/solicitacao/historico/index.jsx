@@ -1,18 +1,18 @@
-import Tables from "@/components/Admin/Tables";
-import MainMenu from "@/components/Admin/MainMenu";
 import Rodape from "@/components/Rodape";
-import { getSession, useSession } from "next-auth/react";
+import Historico from "@/components/Solicitacao/Historico";
+import MainMenu from "@/components/Solicitacao/MainMenu";
+import { getSession, useSession } from 'next-auth/react'
 
-
-export default function admin(){
+export default function historico() {
     const {data: session} = useSession()
-    return(
+
+    return (
         <>
             <header>
                 <MainMenu />
             </header>
-            <section className={`flex justify-center items-center`}>
-                <Tables />
+            <section>
+                <Historico />
             </section>
             <footer>
                 <Rodape />
@@ -36,7 +36,7 @@ export const getServerSideProps = async(context) => {
     }
     return {
       props: {
-        session
+        session,
       }
     }
 }

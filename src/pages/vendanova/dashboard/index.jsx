@@ -1,15 +1,15 @@
 'use client'
-import { useState, useEffect } from "react";
-import MainMenu from "@/components/VendaNova/MainMenu";
-import GraficoBar from "@/components/Graficos/GraficoBar";
-import GraficoDonut from "@/components/Graficos/GraficoDonut";
-import CampanhaPaga from "@/components/Graficos/CampanhaPaga";
-import styles from '@/styles/Dashboard.module.css';
-import GraficoPolar from "@/components/Graficos/GraficoPolar";
-import Rodape from "@/components/Rodape";
-import GraficoBarHorizontal from "@/components/Graficos/GraficoBarHorizontal";
+import { useState, useEffect } from "react"
+import MainMenu from "@/components/VendaNova/MainMenu"
+import GraficoBar from "@/components/Graficos/GraficoBar"
+import GraficoDonut from "@/components/Graficos/GraficoDonut"
+import CampanhaPaga from "@/components/Graficos/CampanhaPaga"
+import styles from '@/styles/Dashboard.module.css'
+import GraficoPolar from "@/components/Graficos/GraficoPolar"
+import Rodape from "@/components/Rodape"
+import GraficoBarHorizontal from "@/components/Graficos/GraficoBarHorizontal"
 import CampanhaPagaMobile from "@/components/Graficos/CampanhaPagaMobile"
-import { getSession } from "next-auth/react";
+import { getSession } from "next-auth/react"
 
  
 export default function dashboard(){

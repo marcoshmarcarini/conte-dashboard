@@ -1,6 +1,25 @@
 import NextAuth from "next-auth/next"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider  from "next-auth/providers/credentials"
+import { db } from "@/utils/firebase"
+import { getDoc, collection, where, query, getDocs } from "firebase/firestore"
+
+async function getUserByEmail(email){
+    const usersCollection = collection(db, 'usuarios')
+    const q = query(usersCollection, where("email", "==", email))
+    const querySnapshot = await getDocs(q)
+
+    if(querySnapshot.size === 0){
+        return null
+    }
+
+    //Supondo que o email seja exclusivo, então só haverá um usuário no resultado
+    const userDoc = querySnapshot.docs[0]
+    return userDoc.data()
+
+}
+
+
  
 export const authOptions = {
     providers: [
@@ -11,9 +30,19 @@ export const authOptions = {
                 password: {label: "Password", type: "password"}
             },
             async authorize(credentials, req){
-                if((credentials.email === "marcoshmarcarini@hotmail.com" && credentials.password === "#r4e3w2q1")){
+                const user = await getUserByEmail(credentials.email)
+                if(user && user.password === credentials.password){
+                    return{
+                        id: user.id,
+                        name: user.username,
+                        email: user.email,
+                        image: user.fotoPerfil || "/img/default-profile.jpg" // uma imagem padrão
+                    }
+                }
+                return null
+                /* if((credentials.email === "marcoshmarcarini@hotmail.com" && credentials.password === "#r4e3w2q1")){
                     return {
-                        id: 1,
+                        id: "1",
                         name: "Marcos Henrique",
                         email: "marcoshmarcarini@hotmail.com",
                         image: '/img/profiles/junior.png'
@@ -21,7 +50,7 @@ export const authOptions = {
                     
                 } else if((credentials.email === "thais@comconteudo.com.br" && credentials.password === "conteudo@90")){
                     return {
-                            id: 2,
+                            id: "2",
                             name: "Thais Souza",
                             email: "thais@comconteudo.com.br",
                             image: "/img/profiles/thais.jpg"
@@ -29,19 +58,19 @@ export const authOptions = {
                     
                 } else if((credentials.email === "junior@comconteudo.com.br" && credentials.password === "conteudo@90")){
                     return{
-                        id: 3,
+                        id: "3",
                         name: "Junior",
                         email: "junior@comconteudo.com.br",
                         image: '/img/profiles/junior.png'
                     }
                 } else if((credentials.email === "gustavo@comconteudo.com.br" && credentials.password === "conteudo@90")){
                     return{
-                        id:4,
+                        id: "4",
                         name: "Gustavo Coelho",
                         email: "gustavo@comconteudo.com.br",
                         image: "/img/profiles.gustavo.jpg"
                     }
-                }
+                } */
             }
         }),
         GoogleProvider({
