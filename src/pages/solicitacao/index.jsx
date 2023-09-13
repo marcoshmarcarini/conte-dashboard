@@ -2,7 +2,7 @@ import styles from '@/styles/Solicitacao.module.css'
 import { getSession, useSession } from 'next-auth/react'
 import MainMenu from '@/components/Solicitacao/MainMenu'
 import FireStore from '@/components/Solicitacao/FireStore'
-import Rodape from '@/components/Rodape'
+import Rodape from '@/components/Solicitacao/Rodape'
 
 
 

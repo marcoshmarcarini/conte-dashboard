@@ -1,0 +1,17 @@
+.rodapeArea{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 0;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+}
+
+@media (max-width: 1024px) {
+    .rodapeArea{
+        position: relative;
+    }
+}

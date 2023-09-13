@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react"
 
 export default function FireStore() {
     const { data: session } = useSession()
-    
+
     const [novaNota, setNovaNota] = useState({
         /* Infos da Empresa */
         nomeFantasia: '', razaoSocial: '', cnpj: '',
@@ -136,9 +136,9 @@ export default function FireStore() {
     return (
         <div className={`flex flex-col justify-center items-center gap-5`}>
 
-            <form className={`${styles.formulario} container mr-auto ml-auto gap-10 flex flex-col justify-center items-center h-screen w-screen `}>
-                <h2 className={`text-center font-bold text-lg`}>Solicitação de Pagamento</h2>
-                <div className={`flex justify-beetween items-center gap-5 ${styles.formContent}`}>
+            <form className={`${styles.formulario} container mr-auto ml-auto gap-10 flex flex-col justify-center items-center `}>
+                <h2 className={`text-center font-bold text-lg translate-y-6`}>Solicitação de Pagamento</h2>
+                <div className={`flex justify-center items-center gap-5 ${styles.formContent}`}>
                     <div className={`${styles.formCol1} p-2  `}>
                         <div className={`${styles.formControl} w-full`}>
                             <input
@@ -229,16 +229,29 @@ export default function FireStore() {
                                 />
                             </div>
 
-                            <div className={`flex gap-5 items-center justify-between`}>
-                                <label htmlFor="anexos">Anexos</label>
-                                <input
-                                    type="file"
-                                    id="anexos"
-                                    accept=".doc,.docx,.xlx,.xlxs,.pdf,.jpg,.png,.mp4"
-                                    multiple="true"
-                                    onChange={handleFileChange}
-
-                                />
+                            <div className={`flex gap-5 items-center justify-beetween my-[10px]`}>
+                                <div className={`${styles.anexos}`}>
+                                    <label
+                                        htmlFor="anexos"
+                                        className={`flex items-center gap-1 bg-orange-400 text-white px-[10px] py-[10px] rounded-md`}
+                                    >
+                                        <Image
+                                            width={30}
+                                            height={30}
+                                            src="https://img.icons8.com/external-basicons-solid-edtgraphics/30/ffffff/external-Attach-files-basicons-solid-edtgraphics.png"
+                                            alt="external-Attach-files-basicons-solid-edtgraphics"
+                                        />
+                                        Anexos
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="anexos"
+                                        accept=".doc,.docx,.xlx,.xlxs,.pdf,.jpg,.png,.mp4"
+                                        multiple="true"
+                                        onChange={handleFileChange}
+                                        className={`hidden`}
+                                    />
+                                </div>
                                 <div
                                     className={styles.infoAnexo}
                                     onMouseEnter={handleDnone}
@@ -268,12 +281,14 @@ export default function FireStore() {
 
                     <div className={`${styles.formCol1}  p-2 `}>
                         <div className={`${styles.formControl} w-full`}>
+                            <label htmlFor="numBanco">Dados Bancários</label>
                             <input
                                 type="text"
                                 className={`rounded-sm shadow-orange-100 shadow-md`}
                                 value={novaNota.numBanco}
                                 placeholder={`Nº do Banco`}
                                 onChange={(e) => setNovaNota({ ...novaNota, numBanco: e.target.value })}
+                                id="numBanco"
                             />
 
                             <input
