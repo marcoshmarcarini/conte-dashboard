@@ -13,7 +13,7 @@ export default function LoginBtn() {
   const pic = session?.user?.image
 
   const home = '/solicitacao'
-  const historico = '/historico'
+  const historico = '/solicitacao/historico'
 
   const [menu, setMenu] = useState({
     tela: 'none', animation: ''
