@@ -24,7 +24,6 @@
     border-radius: 10px;
     max-width: 300px;
     width: 100%;
-
 }
 
 .historicoCampanha{
@@ -38,4 +37,15 @@
 
 .historicoStatus{
     width: 150px;
+}
+
+.historicoUpload{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.historicoContent img{
+    cursor: pointer;
+    
 }

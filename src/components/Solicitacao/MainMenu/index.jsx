@@ -1,4 +1,4 @@
-import styles from '@/components/MainMenu/MainMenu.module.css'
+import styles from './MainMenu.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import LoginBtn from '../LoginBtn'

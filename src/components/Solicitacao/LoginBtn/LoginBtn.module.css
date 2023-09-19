@@ -17,8 +17,9 @@
     background-color: #fff;
     transition: 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 200px;
-    height: 200px;
+    height: 152px;
     animation: fadeIn 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 999999;
 }
 
 .listMenuMobile ul{
@@ -54,7 +55,10 @@
 @media (max-width: 500px) {
     .listMenuMobile{
         transform: translate(-5px, 60px);
-        animation: fadeInMobile 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275)
+        animation: fadeInMobile 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 150px;
+        
+        
     }
 }
 

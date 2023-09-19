@@ -2,7 +2,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router"; // Importe o useRouter
 import Image from "next/image";
 import Link from "next/link";
-import styles from "@/components/LoginBtn/LoginBtn.module.css"
+import styles from "@/components/Solicitacao/LoginBtn/LoginBtn.module.css"
 import { useEffect, useState } from "react";
 
 export default function LoginBtn() {

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { db } from "../../../utils/firebase"
-import { collection, getDocs, orderBy, query, deleteDoc, updateDoc, doc } from "firebase/firestore"
+import { collection, getDocs, orderBy, query, deleteDoc, updateDoc, doc, deleteField } from "firebase/firestore"
 import styles from "./Tables.module.css"
 import ExportarDados from "@/components/ExportarDados"
 
@@ -53,14 +53,27 @@ export default function Tables() {
 
     const handleStatusChange = async (solicitacao, novoStatus) => {
         const solicitaRef = doc(db, 'solicitacao', solicitacao.id)
+
         await updateDoc(solicitaRef, { status: novoStatus })
+
+
+        if (novoStatus === 'Erro Documentação') {
+            await updateDoc(solicitaRef, {
+                anexoNF: deleteField()
+            })
+        }
+
         await MostrarSolicitacoes()
+
     }
 
     /* const updateSolicitacaoInFirestore = async (solicitacao) => {
         const solicitaRef = doc(db, 'solicitacao', solicitacao)
         await updateDoc(solicitaRef, updateSolicitacoes)
     } */
+
+
+
 
 
 
@@ -143,8 +156,8 @@ export default function Tables() {
                                     <td
                                         className={` ${styles.tdAnexo}`}
                                     >
-                                        {solicitacao.anexoNF.map((anexo) => {
-                                            return (
+                                        {solicitacao.anexoNF ? (
+                                            solicitacao.anexoNF.map((anexo) => (
                                                 <Link
                                                     href={anexo.toString()}
                                                     key={anexo.id}
@@ -167,11 +180,8 @@ export default function Tables() {
                                                                                             ''
                                                         }
                                                     />
-
                                                 </Link>
-                                            )
-
-                                        })}
+                                            ))) : ''}
 
                                     </td>
                                     <td>
@@ -228,34 +238,36 @@ export default function Tables() {
                             <div className={`text-sm text-gray-700`}><p>Clique nos ícones para baixar os anexos:</p></div>
                             <div className={`flex justify-end items-center`}>
                                 <div className={`flex mr-auto`}>
-                                    {solicitacao.anexoNF.map((anexo) => {
-                                        return (
-                                            <Link
-                                                href={anexo.toString()}
-                                                key={anexo.id}
-                                                target="_blank"
-                                                className={`${styles.linkAnexoMb}`}
-                                            >
-                                                <Image
-                                                    width={30}
-                                                    height={30}
-                                                    alt="document"
-                                                    src={
-                                                        String(anexo).match(/.doc/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
-                                                            String(anexo).match(/.docx/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
-                                                                String(anexo).match(/.xlx/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
-                                                                    String(anexo).match(/.xlxs/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
-                                                                        String(anexo).match(/.pdf/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/pdf.png` :
-                                                                            String(anexo).match(/.jpg/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
-                                                                                String(anexo).match(/.png/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
-                                                                                    String(anexo).match(/.mp4/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/video.png` :
-                                                                                        ''
-                                                    }
-                                                />
+                                    {solicitacao.anexoNF ? (
+                                        solicitacao.anexoNF.map((anexo) => {
+                                            return (
+                                                <Link
+                                                    href={anexo.toString()}
+                                                    key={anexo.id}
+                                                    target="_blank"
+                                                    className={`${styles.linkAnexoMb}`}
+                                                >
+                                                    <Image
+                                                        width={30}
+                                                        height={30}
+                                                        alt="document"
+                                                        src={
+                                                            String(anexo).match(/.doc/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
+                                                                String(anexo).match(/.docx/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
+                                                                    String(anexo).match(/.xlx/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
+                                                                        String(anexo).match(/.xlxs/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
+                                                                            String(anexo).match(/.pdf/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/pdf.png` :
+                                                                                String(anexo).match(/.jpg/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
+                                                                                    String(anexo).match(/.png/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
+                                                                                        String(anexo).match(/.mp4/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/video.png` :
+                                                                                            ''
+                                                        }
+                                                    />
 
-                                            </Link>
-                                        )
-                                    })}
+                                                </Link>
+                                            )
+                                        })
+                                    ) : ''}
                                 </div>
                                 <div>
                                     <button

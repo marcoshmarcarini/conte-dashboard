@@ -10,15 +10,17 @@ export default function solicitacao(){
     const {data: session} = useSession()
     return(
         <>
-            <header>
-              <MainMenu />
-            </header>
-              <section>
-                <FireStore />
-              </section>
-            <footer>
-              <Rodape />
-            </footer>
+            <div className={styles.solicitacaoContent}>
+              <header>
+                <MainMenu />
+              </header>
+                <section>
+                  <FireStore />
+                </section>
+              <footer>
+                <Rodape />
+              </footer>
+            </div>
         </>
     )
 }

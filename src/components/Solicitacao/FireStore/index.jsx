@@ -1,12 +1,17 @@
 'use client'
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
 import { db, storage } from '../../../utils/firebase'
 import { addDoc, collection } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import styles from './FireStore.module.css'
+
 import Image from "next/image"
 import axios from "axios"
-import { useSession } from "next-auth/react"
+
+import styles from './FireStore.module.css'
+
+
+/* 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275)  */
 
 
 export default function FireStore() {
@@ -32,11 +37,13 @@ export default function FireStore() {
     })
 
     const [selectedFiles, setSelectedFiles] = useState([])
-
+    const [infoTransform, setInfoTransform] = useState('translateX(50px)')
 
 
     const handleFileChange = (e) => {
         const files = e.target.files
+        const size = files.size
+        console.log(size)
         setSelectedFiles([...selectedFiles, ...files])
     }
 
@@ -45,6 +52,7 @@ export default function FireStore() {
     //Adicionar Nova Nota
     const AddNota = async (e) => {
         e.preventDefault();
+
 
         if (!session || !session.user || !session.user.email) {
             console.error('ID do usuário ausente na sessão.');
@@ -124,14 +132,48 @@ export default function FireStore() {
 
 
     /* Botão Info */
+    const [windowSize, setWindowSize] = useState({
+        width: undefined,
+        height: undefined
+    })
+
+    console.log(windowSize)
+
+
 
     const handleDnone = () => {
         setDnone('block')
+
+        if (typeof window !== 'undefined') {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
+            })
+        }
+        if (windowSize <= 500) {
+            setInfoTransform('translateX(-75px)')
+        }
     }
+
+
 
     const handleDnoneOut = () => {
         setDnone('none')
+
+        if (typeof window !== 'undefined') {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
+            })
+        }
+
+        if (windowSize <= 500) {
+            setInfoTransform('translateX(50px)')
+        }
     }
+
+    useEffect(() => { handleDnone }, [])
+    useEffect(() => { handleDnoneOut }, [])
 
     return (
         <div className={`flex flex-col justify-center items-center gap-5`}>
@@ -233,15 +275,20 @@ export default function FireStore() {
                                 <div className={`${styles.anexos}`}>
                                     <label
                                         htmlFor="anexos"
-                                        className={`flex items-center gap-1 bg-orange-400 text-white px-[10px] py-[10px] rounded-md`}
+                                        className={`flex flex-col items-center gap-1 bg-orange-400 text-white px-[10px] py-[10px] rounded-md ${styles.anexosLabel}`}
                                     >
-                                        <Image
-                                            width={30}
-                                            height={30}
-                                            src="https://img.icons8.com/external-basicons-solid-edtgraphics/30/ffffff/external-Attach-files-basicons-solid-edtgraphics.png"
-                                            alt="external-Attach-files-basicons-solid-edtgraphics"
-                                        />
-                                        Anexos
+                                        <div className={`flex items-center gap-1`}>
+                                            <Image
+                                                width={30}
+                                                height={30}
+                                                src="https://img.icons8.com/external-basicons-solid-edtgraphics/30/ffffff/external-Attach-files-basicons-solid-edtgraphics.png"
+                                                alt="external-Attach-files-basicons-solid-edtgraphics"
+                                            />
+                                            Anexos
+                                        </div>
+                                        <p className={`text-xs text-center`}>
+                                            Tamanho <br /> máximo: 2Mb
+                                        </p>
                                     </label>
                                     <input
                                         type="file"
@@ -256,6 +303,7 @@ export default function FireStore() {
                                     className={styles.infoAnexo}
                                     onMouseEnter={handleDnone}
                                     onMouseLeave={handleDnoneOut}
+                                    style={{ transform: infoTransform }}
                                 >
                                     <Image
                                         width="20"
@@ -271,7 +319,7 @@ export default function FireStore() {
 
                             <input
                                 type="text"
-                                className={`rounded-sm shadow-orange-100 shadow-md`}
+                                className={`rounded-sm shadow-orange-100 shadow-md ${styles.inputLink}`}
                                 value={novaNota.link}
                                 placeholder={`Link com comprovantes`}
                                 onChange={(e) => setNovaNota({ ...novaNota, link: e.target.value })}

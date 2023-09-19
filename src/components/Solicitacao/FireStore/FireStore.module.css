@@ -1,5 +1,6 @@
 .formulario{
     transform: translateY(100px);
+    z-index:initial;
 }
 
 .formContent{
@@ -26,7 +27,7 @@
     color: #ffffff;
     text-align: center;
     padding: 10px;
-    margin: 10px auto 0px auto;
+    margin: 70px auto 0px auto;
     border: 1px solid transparent;
 }
 
@@ -75,6 +76,11 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
+    cursor: pointer;
+}
+
+.anexosLabel{
+    cursor: pointer;
 }
 
 .infoAnexo{
@@ -82,14 +88,19 @@
 }
 
 .infoCard{
-    max-width: 200px;
+    max-width: 400px;
     width: 100%;
     border: 1px solid #e67e22;
     background-color: #fff;
     padding: 5px 10px;
     position: absolute;
-    transform: translate(480px, 50px);
+    transform: translate(250px, 0px);
     animation: aparecer 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.inputLink{
+    margin-top: 25px !important;
+    margin-bottom: 25px !important;
 }
 
 
@@ -127,6 +138,7 @@
         border: none;
         margin-bottom: 0px;
         transition:  400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        margin-top: 80px;
     }
     .formCol1:nth-child(2){
         transform: translateY(-80px);
@@ -145,7 +157,7 @@
 
     .anexos{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: start;
     }
 
@@ -154,19 +166,29 @@
         justify-content: center;
         margin: auto;
         align-items: center;
-        transform: translateY(20px);
+        transform: translate(-160px,0px);
+        
     }
 
     
     .infoCard{
-        max-width: 200px;
+        max-width: 300px;
         width: 100%;
         border: 1px solid #e67e22;
         background-color: #fff;
         padding: 5px 10px;
         position: absolute;
-        transform: translate(450px, 50px);
+        transform: translate(170px, 0px);
         animation: aparecer 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .formSubmit{
+        max-width: 200px;
+        background-color: #e67e22;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px;
+        margin: 50px auto 0px auto;
     }
 
 }
@@ -176,9 +198,30 @@
         max-width: 300px;
         width: 100%;
     }
+
     .formControl input{
         max-width: 300px;
         width: 100%;
+    }
+
+    .infoAnexo{
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        align-items: center;
+        transition: 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .infoCard{
+        max-width: 130px;
+        font-size: x-small;
+        width: 100%;
+        border: 1px solid #e67e22;
+        background-color: #fff;
+        padding: 5px 10px;
+        position: absolute;
+        transform: translate(170px, 0px);
+        animation: aparecer 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 }
 
