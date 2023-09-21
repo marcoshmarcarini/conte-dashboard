@@ -26,7 +26,7 @@ export default function GraficoDonut(){
     //Valores Gerais
     useEffect(() => {
         const graphData = async () => {
-            const snap = await getDocs(collection(db, 'notas'))
+            const snap = await getDocs(collection(db, 'solicitacao'))
             const snapData = []
             snap.forEach((doc) => {
                 snapData.push({id: doc.id, ...doc.data()})
@@ -44,10 +44,18 @@ export default function GraficoDonut(){
             legend: {
             position: 'top',
             display: false,
+            font: {
+                family: "'Helvetica Neue', sans-serif",
+                size: 20,
+            }
             },
             title: {
             display: true,
             text: 'Campanha x Valor',
+            font: {
+                family: "'Helvetica Neue', sans-serif",
+                size: 25,
+            }
             },
         },
     }
@@ -85,7 +93,7 @@ export default function GraficoDonut(){
     return(
         <>
             <div className={`container`}>
-                <div className={styles.graphArea}>
+                <div className={styles.graphAreaDonut}>
                     <Doughnut options={options} data={data} />
                 </div>
             </div>

@@ -37,13 +37,12 @@ export default function MainMenu(){
         <>
             <nav className={styles.mainMenu} style={{height:menuStyles.altura, backgroundColor:menuStyles.fundo}}>
                 <div className={styles.navBrand} style={{filter:menuStyles.corLogo}}>
-                    <Image src={`img/logo-conte.svg`} width={menuStyles.logo} height={menuStyles.logo} alt={`Conteúdo Gestão de Ideias`} />
+                    <Image src={`/img/logo-conte.svg`} width={menuStyles.logo} height={menuStyles.logo} alt={`Conteúdo Gestão de Ideias`} />
                 </div>
                 <div className={`${styles.listMenu}`}>
                     <ul>
                         <li><Link href={home} onClick={handleAbre} style={{color:menuStyles.corTexto}}>Lançamentos</Link></li>
                         <li><Link href={dashboard} style={{color:menuStyles.corTexto}}>Dashboard</Link></li>
-                        {/* <li><Link href={notasFiscais} onClick={handleEncurta} style={{color:menuStyles.corTexto}}>Notas Fiscais</Link></li> */}
                         <li><LoginBtn /></li>
                     </ul>
                 </div>

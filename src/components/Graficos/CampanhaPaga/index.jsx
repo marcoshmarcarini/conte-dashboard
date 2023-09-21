@@ -26,8 +26,8 @@ export default function CapanhasPagas(){
     //Valores Gerais
     useEffect(() => {
         const graphData = async () => {
-            const colecao = collection(db, 'notas')
-            const q = query(colecao, where('statusNota', '==', 'concluido'))
+            const colecao = collection(db, 'solicitacao')
+            const q = query(colecao, where('status', '==', 'Concluído'))
             const snapQuery = await getDocs(q)
             const snapDataQuery = []
 
@@ -46,10 +46,18 @@ export default function CapanhasPagas(){
             legend: {
                 position: 'top',
                 display: false,
+                font: {
+                    family: "'Helvetica Neue', sans-serif",
+                    size: 14,
+                }
             },
             title: {
                 display: true,
-                text: 'Campanhas Pagas X Valor',
+                text: 'Campanhas Concluídas',
+                font: {
+                    family: "'Helvetica Neue', sans-serif",
+                    size: 25,
+                }
             },
         },
     }

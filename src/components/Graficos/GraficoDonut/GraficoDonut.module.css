@@ -13,3 +13,15 @@
       width: 300px;
    }
 } */
+
+.graphAreaDonut{
+   width: 500px;
+}
+
+@media (max-width:500px) {
+   .graphAreaDonut{
+      width: 300px;
+      margin: auto;
+      display: flex;
+   }
+}

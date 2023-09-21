@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import LoginBtn from '../LoginBtn'
 
+
 export default function MainMenu(){
     const home = '/solicitacao'
     const dashboard = '/solicitacao/historico'

@@ -20,7 +20,7 @@ export default function GraficoPolar(){
     //Gráfico Data
     useEffect(() => {
         const graphData = async () => {
-            const snap = await getDocs(collection(db, 'notas'))
+            const snap = await getDocs(collection(db, 'solicitacao'))
             const snapData = []
             snap.forEach((doc) => {
                 snapData.push({id: doc.id, ...doc.data()})
@@ -39,7 +39,7 @@ export default function GraficoPolar(){
 
         graph.forEach(row => {
             const campanha = row.campanha
-            const status = row.statusNota
+            const status = row.status
 
             if(!statusCount[campanha]){
                 statusCount[campanha] = {
@@ -118,7 +118,7 @@ export default function GraficoPolar(){
     return(
         <>
             <div className={`container`}>
-                <div className={styles.graphArea}>
+                <div className={styles.graphAreaPolar}>
                     <PolarArea options={options} data={data} />
                 </div>
             </div>

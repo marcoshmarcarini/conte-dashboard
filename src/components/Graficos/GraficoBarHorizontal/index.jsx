@@ -5,6 +5,9 @@ import { db } from '@/utils/firebase'
 import styles from './GraficoBarHorizontal.module.css'
 import {Chart as ChartJS, CategoryScale, LinearScale,BarElement, Title, Tooltip, Legend} from 'chart.js'
 import {Bar} from "react-chartjs-2"
+import {Roboto} from "next/font/google"
+
+const roboto = Roboto({subsets: ['latin'], weight: '500'})
 
 ChartJS.register(
     CategoryScale,
@@ -22,7 +25,7 @@ export default function GraficoBarHorizontal(){
     //Gráfico Data
     useEffect(() => {
         const graphData = async () => {
-            const snap = await getDocs(collection(db, 'notas'))
+            const snap = await getDocs(collection(db, 'solicitacao'))
             const snapData = []
             snap.forEach((doc) => {
                 snapData.push({id: doc.id, ...doc.data()})
@@ -43,12 +46,20 @@ export default function GraficoBarHorizontal(){
             position: 'left',
             display: false,
             labels: {
-                display: false
+                display: false,
+                font: {
+                    family: "'Helvetica Neue', sans-serif",
+                    size: 14,
+                }
             }
             },
             title: {
             display: true,
             text: 'Campanha x Valor',
+            font: {
+                family: "'Helvetica Neue', sans-serif",
+                size: 18,
+            }
             },  
         },
         
@@ -80,7 +91,7 @@ export default function GraficoBarHorizontal(){
     return(
         <>
             <div className={`container`}>
-                <div className={styles.graphArea}>
+                <div className={styles.graphAreaBarHorizontal}>
                     <Bar options={options} data={data} />
                 </div>
             </div>

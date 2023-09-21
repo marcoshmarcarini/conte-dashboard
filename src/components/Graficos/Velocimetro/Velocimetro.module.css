@@ -1,0 +1,13 @@
+.titulo{
+    font-weight: 700;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+.somaValor{
+    position: absolute;
+    z-index: 9999;
+    font-weight: 700;
+    font-size: 25px;
+    transform: translateY(10px);
+}
+
