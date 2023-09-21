@@ -3,15 +3,17 @@ import { useState, useEffect } from "react";
 import MainMenu from "@/components/Admin/MainMenu";
 import Rodape from "@/components/Rodape";
 
-import GraficoBar from "@/components/Graficos/GraficoBar";
-import GraficoDonut from "@/components/Graficos/GraficoDonut";
-import CampanhaPaga from "@/components/Graficos/CampanhaPaga";
-import Velocimetro from "@/components/Graficos/Velocimetro";
+import GraficoBar from "@/components/Admin/Graficos/GraficoBar";
+import GraficoDonut from "@/components/Admin/Graficos/GraficoDonut";
+import CampanhaPaga from "@/components/Admin/Graficos/CampanhaPaga";
+import Velocimetro from "@/components/Admin/Graficos/Velocimetro";
+import GraficoBarHorizontal from "@/components/Admin/Graficos/GraficoBarHorizontal";
+import CampanhaPagaMobile from "@/components/Admin/Graficos/CampanhaPagaMobile"
+
 import styles from '@/styles/Dashboard.module.css';
 
 
-import GraficoBarHorizontal from "@/components/Graficos/GraficoBarHorizontal";
-import CampanhaPagaMobile from "@/components/Graficos/CampanhaPagaMobile"
+
 
 
 export default function dashboard() {

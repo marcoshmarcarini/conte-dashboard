@@ -12,8 +12,8 @@ export default function LoginBtn() {
   const email = session?.user?.email
   const pic = session?.user?.image
 
-  const home = '/solicitacao'
-  const historico = '/historico'
+  const home = '/admin'
+  const dashboard = '/admin/dashboard'
 
   const [menu, setMenu] = useState({
     tela: 'none', animation: ''
@@ -94,7 +94,7 @@ export default function LoginBtn() {
             <div className={`${styles.listMenuMobile}`} style={{ display: menu.tela, animation: menu.animation }}>
               <ul>
                 <li><Link href={home}>Solicitações</Link></li>
-                <li><Link href={historico}>Histórico</Link></li>
+                <li><Link href={dashboard}>Dashboard</Link></li>
                 <li>
                   <button
                     className={`border border-orange-500 rounded-sm p-2 text-white bg-orange-400 hover:bg-white hover:text-orange-400 hover:border-orange-400 transition transform`}
