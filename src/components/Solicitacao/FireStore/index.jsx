@@ -10,6 +10,8 @@ import axios from "axios"
 
 import styles from './FireStore.module.css'
 
+/* Segunda tentativa do E-mail */
+
 
 /* 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275)  */
 
@@ -39,6 +41,7 @@ export default function FireStore() {
     const [selectedFiles, setSelectedFiles] = useState([])
     const [infoTransform, setInfoTransform] = useState('translateX(50px)')
 
+    
 
     const handleFileChange = (e) => {
         const files = e.target.files
@@ -49,7 +52,9 @@ export default function FireStore() {
 
     const [dnone, setDnone] = useState('none')
 
-    //Adicionar Nova Nota
+
+
+    //Adicionar Solicitação
     const AddNota = async (e) => {
         e.preventDefault();
 
@@ -90,6 +95,8 @@ export default function FireStore() {
                 status: 'Recebido',
                 userID: username
             })
+
+            
 
 
             try {
