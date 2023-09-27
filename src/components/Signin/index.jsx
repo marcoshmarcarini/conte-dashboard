@@ -41,7 +41,7 @@ export default function Signin() {
             })
 
             //Enviando email para o cliente
-            const enviarEmail = await fetch('http://localhost:3000/api/sendsubscribe', {
+            const enviarEmail = await fetch('/api/sendsubscribe', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
