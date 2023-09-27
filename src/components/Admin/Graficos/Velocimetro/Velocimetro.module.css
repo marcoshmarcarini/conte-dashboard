@@ -1,6 +1,6 @@
 .titulo{
-    font-weight: 700;
-    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-size: 18px;
+    color: #666666;
 }
 
 .somaValor{
@@ -9,5 +9,6 @@
     font-weight: 700;
     font-size: 25px;
     transform: translateY(10px);
+    color: #2ecc71;
 }
 
