@@ -40,6 +40,31 @@ export default function Signin() {
                 fotoPerfil: fotoPerfilURL
             })
 
+            //Enviando email para o cliente
+            const enviarEmail = await fetch('http://localhost:3000/api/sendsubscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: usuario.username,
+                    email: usuario.email,
+                    password: usuario.password,
+                    body: `
+                    <p>
+                        Obrigado por se inscrever! Abaixo está as suas credenciais para acessar o nosso sistema.
+                        Clique no link abaixo para logar e fazer suas solicitações.
+                    </p>
+                    <ul>
+                        <li>Usuário: ${usuario.username}</li>
+                        <li>E-mail: ${usuario.email}</li>
+                        <li>Password: ${usuario.password}</li>
+                    </ul>
+                    <a href="https://dashconte.vercel.app/">Solicitação de Pagamento</a>
+                `
+                })
+            })
+
             //Restaurando Estado
             setUsuario({
                 username: '', email: '', password: '', fotoPerfil: ''

@@ -113,9 +113,6 @@ export default function FireStore() {
                 })
             })
 
-            const mailData = await enviarEmail.json()
-
-            console.log(mailData)
 
 
             setNovaNota({

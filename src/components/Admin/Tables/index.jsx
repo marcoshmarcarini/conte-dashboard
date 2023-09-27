@@ -257,8 +257,8 @@ export default function Tables() {
                                                                     String(anexo).match(/.xlx/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
                                                                         String(anexo).match(/.xlxs/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
                                                                             String(anexo).match(/.pdf/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/pdf.png` :
-                                                                                String(anexo).match(/.jpg/) ? `https://img.icons8.com/pastel-glyph/64/image--v1.png` :
-                                                                                    String(anexo).match(/.png/) ? `https://img.icons8.com/pastel-glyph/64/image--v1.png` :
+                                                                                String(anexo).match(/.jpg/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
+                                                                                    String(anexo).match(/.png/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
                                                                                         String(anexo).match(/.mp4/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/video.png` :
                                                                                             ''
 
