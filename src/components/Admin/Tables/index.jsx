@@ -22,7 +22,7 @@ export default function Tables() {
         console.log(colecao)
         const q = query(
             colecao,
-            orderBy('timeStamp', 'desc')
+            orderBy('timeStamp', 'asc')
         )
         const snap = await getDocs(q)
         const snapData = []

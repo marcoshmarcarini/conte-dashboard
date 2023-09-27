@@ -11,7 +11,13 @@ export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
-    if (session.user.email === 'gustavo@comconteudo.com.br') {
+    if (
+      session.user.email === 'gustavo@comconteudo.com.br' ||
+      session.user.email === 'thais@comconteudo.com.br' ||
+      session.user.email === 'priscila@comconteudo.com.br' ||
+      session.user.email === 'neide@comconteudo.com.br' ||
+      session.user.email === 'atendimento@comconteudo.com.br'
+    ) {
       router.push('/admin')
     } else {
       router.push('/solicitacao')
