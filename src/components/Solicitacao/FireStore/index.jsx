@@ -6,11 +6,11 @@ import { addDoc, collection } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 import Image from "next/image"
-import axios from "axios"
 
 import styles from './FireStore.module.css'
 
-/* Segunda tentativa do E-mail */
+//import nodemailer from 'nodemailer'
+
 
 
 /* 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275)  */
@@ -41,17 +41,13 @@ export default function FireStore() {
     const [selectedFiles, setSelectedFiles] = useState([])
     const [infoTransform, setInfoTransform] = useState('translateX(50px)')
 
-    
-
     const handleFileChange = (e) => {
         const files = e.target.files
         const size = files.size
-        console.log(size)
         setSelectedFiles([...selectedFiles, ...files])
     }
 
     const [dnone, setDnone] = useState('none')
-
 
 
     //Adicionar Solicitação
@@ -60,7 +56,7 @@ export default function FireStore() {
 
 
         if (!session || !session.user || !session.user.email) {
-            console.error('ID do usuário ausente na sessão.');
+            console.error('ID do usuário ausente na sessão.')
             return;
         }
 
@@ -96,25 +92,30 @@ export default function FireStore() {
                 userID: username
             })
 
-            
-
-
-            try {
-                const response = await axios.post("https://localhost:3000/api/enviar-email", {
-                    destinatario: novaNota.emailValido,
-                    assunto: "Solicitação Enviada",
-                    corpo: "SUa solicitação foi enviada com sucesso! Em breve, um de nossos colaboradores entrará em contato."
+            const enviarEmail = await fetch('http://localhost:3000/api/sendemail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: novaNota.emailValido,
+                    campanha: novaNota.campanha,
+                    body: `
+                    <ul>
+                        <li>Nome da Campanha: ${novaNota.campanha}</li>
+                        <li>Tipo de Material ou Mídia: ${novaNota.tipo}</li>
+                        <li>Número PP ou PI: ${novaNota.pppi}</li>
+                        <li>Valor da Nota: R$ ${novaNota.valor}</li>
+                        <li>Número da Nota Fiscal: ${novaNota.notafiscal}</li>
+                        <li>Data de Veiculação: ${novaNota.dataVeiculacao}</li>
+                    </ul>
+                `
                 })
-                if (response.status === 200) {
-                    console.log("E-mail enviado com sucesso!")
-                } else {
-                    console.error("Erro ao enviar e-mail", response.data.erro)
-                }
+            })
 
-            } catch (error) {
-                console.error("Erro ao enviar a mensagem:", error)
-            }
+            const mailData = await enviarEmail.json()
 
+            console.log(mailData)
 
 
             setNovaNota({
@@ -143,9 +144,6 @@ export default function FireStore() {
         width: undefined,
         height: undefined
     })
-
-    console.log(windowSize)
-
 
 
     const handleDnone = () => {

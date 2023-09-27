@@ -1,20 +1,14 @@
 'use client'
-//import Image from 'next/image'
-import { Inter } from 'next/font/google'
-//import FireStore from '@/components/FireStore'
-import MainMenu from '@/components/MainMenu'
-import Rodape from '@/components/Rodape'
-import { getSession, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { getSession, useSession } from 'next-auth/react'
+import MainMenu from '@/components/MainMenu'
+import Rodape from '@/components/Rodape'
 
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const { data: session } = useSession()
   const router = useRouter()
-  console.log(router)
 
   useEffect(() => {
     if (session.user.email === 'gustavo@comconteudo.com.br') {
