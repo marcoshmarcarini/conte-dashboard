@@ -1,6 +1,6 @@
 "use client"
 import React,{useState, useEffect, useRef} from 'react'
-import {collection, getDocs} from 'firebase/firestore'
+import {collection, getDocs, query, where} from 'firebase/firestore'
 import { db } from '@/utils/firebase'
 import styles from './GraficoBarHorizontal.module.css'
 import {Chart as ChartJS, CategoryScale, LinearScale,BarElement, Title, Tooltip, Legend} from 'chart.js'
@@ -25,10 +25,13 @@ export default function GraficoBarHorizontal(){
     //Gráfico Data
     useEffect(() => {
         const graphData = async () => {
-            const snap = await getDocs(collection(db, 'solicitacao'))
+            const colecao = collection(db, 'solicitacao')
+            const q = query(colecao, where('status', '==', 'Recebido'))
+            const snap = await getDocs(q)
             const snapData = []
+
             snap.forEach((doc) => {
-                snapData.push({id: doc.id, ...doc.data()})
+                snapData.push({ id: doc.id, ...doc.data() })
             })
             setGraph(snapData)
         }
@@ -55,7 +58,7 @@ export default function GraficoBarHorizontal(){
             },
             title: {
             display: true,
-            text: 'Campanha x Valor',
+            text: 'Campanhas Recebidas',
             font: {
                 family: "'Helvetica Neue', sans-serif",
                 size: 18,

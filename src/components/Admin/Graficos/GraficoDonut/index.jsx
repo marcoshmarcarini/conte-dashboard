@@ -1,6 +1,6 @@
 "use client"
 import React,{useState, useEffect} from 'react'
-import {collection, getDocs, count, getCountFromServer} from 'firebase/firestore'
+import {collection, getDocs, query, where} from 'firebase/firestore'
 import { db } from '@/utils/firebase'
 import styles from './GraficoDonut.module.css'
 import {Chart as ChartJS, CategoryScale, LinearScale,BarElement, Title, Tooltip, Legend, ArcElement} from 'chart.js'
@@ -26,12 +26,15 @@ export default function GraficoDonut(){
     //Valores Gerais
     useEffect(() => {
         const graphData = async () => {
-            const snap = await getDocs(collection(db, 'solicitacao'))
-            const snapData = []
-            snap.forEach((doc) => {
-                snapData.push({id: doc.id, ...doc.data()})
+            const colecao = collection(db, 'solicitacao')
+            const q = query(colecao, where('status', '==', 'Com Prefeitura'))
+            const snapQuery = await getDocs(q)
+            const snapDataQuery = []
+
+            snapQuery.forEach((doc) => {
+                snapDataQuery.push({ id: doc.id, ...doc.data() })
             })
-            setGraph(snapData)
+            setGraph(snapDataQuery)
         }
         
         graphData()
@@ -51,7 +54,7 @@ export default function GraficoDonut(){
             },
             title: {
             display: true,
-            text: 'Campanha x Valor',
+            text: 'Campanhas Com Prefeitura',
             font: {
                 family: "'Helvetica Neue', sans-serif",
                 size: 25,

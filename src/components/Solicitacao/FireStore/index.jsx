@@ -92,7 +92,7 @@ export default function FireStore() {
                 userID: username
             })
 
-            const enviarEmail = await fetch('http://localhost:3000/api/sendemail', {
+            const enviarEmail = await fetch('/api/sendemail', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -112,8 +112,6 @@ export default function FireStore() {
                 `
                 })
             })
-
-
 
             setNovaNota({
                 /* Infos da Empresa */

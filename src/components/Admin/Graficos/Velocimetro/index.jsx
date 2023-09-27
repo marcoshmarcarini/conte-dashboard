@@ -1,11 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '@/utils/firebase'
 import styles from './Velocimetro.module.css'
-//import {Chart as ChartJS, CategoryScale, LinearScale,BarElement, Title, Tooltip, Legend} from 'chart.js'
-//import {Bar} from "react-chartjs-2"
-
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ weight: '700', subsets: ['latin'], style: 'normal' })
@@ -68,7 +65,7 @@ export default function Velocimetro() {
                     {/* rgba(255, 159, 64, 1) */}
                 </svg>
                 <div className={styles.somaValor}>
-                    <p>R$ {somaValor.toFixed(2).replace('.', ',')}</p>
+                    <p>{somaValor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</p>
                 </div>
             </div>
 
