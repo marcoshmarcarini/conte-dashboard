@@ -103,66 +103,89 @@ export default function Historico() {
 
         fetchSolicitacoes()
     }, [session])
-
+    /* 
+    ${styles.historicoCard } 
+    styles.historicoCampanha
+    
+    */
     return (
         <>
             <div className={styles.historicoContainer}>
                 <div className={styles.historicoTitle}>Histórico de solicitações</div>
                 <div className={styles.historicoContent}>
                     {solicitacoes.map((solicitacao, id) => (
-                        <div key={id} className={`shadow ${styles.historicoCard}`}>
-                            <p className={styles.historicoCampanha}>{solicitacao.campanha}</p>
-                            <p className={styles.historicoValor}>R$ {Number(solicitacao.valor).toFixed(2).replace('.', ',')}</p>
-                            <p className={` 
+                        <div key={id} className={`  bg-white space-y-3 p-4 rounded-lg shadow`}>
+                            <div className={`flex items-center space-x-2 text-sm`}>
+                                <p className={`font-bold text-orange-500`}>{solicitacao.campanha}</p>
+                            </div>
+                            <div className={`flex items-center space-x-2 text-sm`}>
+                                <p className={`text-gray-500 flex`}>
+                                    <Image width={20} height={20} src="https://img.icons8.com/fluency-systems-filled/20/e67e22/new-document.png" alt="new-document" />
+                                    {solicitacao.pppi}
+                                </p>
+                                <p className={`text-gray-500 flex`}>
+                                    <Image width={20} height={20} src="https://img.icons8.com/fluency-systems-filled/20/e67e22/calendar.png" alt="calendar" />
+                                    {solicitacao.dataVeiculacao}
+                                </p>
+
+                            </div>
+                            <div className={`flex items-center space-x-2 text-sm justify-between`}>
+                                <p className={styles.historicoValor}>R$ {Number(solicitacao.valor).toFixed(2).replace('.', ',')}</p>
+                                <p className={` 
                                 ${solicitacao.status === 'Recebido' ? recebido :
-                                    solicitacao.status === 'Com Prefeitura' ? comPrefeitura :
-                                        solicitacao.status === 'Concluído' ? concluido :
-                                            solicitacao.status === 'Erro Documentação' ? erroDocumentacao :
-                                                ''
-                                } ${styles.historicoStatus}`
-                            }>
-                                {solicitacao.status}
-                            </p>
+                                        solicitacao.status === 'Com Prefeitura' ? comPrefeitura :
+                                            solicitacao.status === 'Concluído' ? concluido :
+                                                solicitacao.status === 'Erro Documentação' ? erroDocumentacao :
+                                                    ''
+                                    } ${styles.historicoStatus}`
+                                }>
+                                    {solicitacao.status}
+                                </p>
+                            </div>
+
+
 
                             {solicitacao.status === 'Erro Documentação' ? (
                                 <div className={styles.historicoUpload}>
                                     <form>
-                                        <p>
+                                        <p className={`mb-3`}>
                                             Reenviar Upload
                                         </p>
-                                        <label htmlFor={`anexos-${solicitacao.id}`}>
-                                            <Image
-                                                width={30}
-                                                height={30}
-                                                src="https://img.icons8.com/metro/30/e67e22/upload.png"
-                                                alt="upload"
+                                        <div className={`flex items-center space-x-2 text-sm justify-between`}>
+                                            <label htmlFor={`anexos-${solicitacao.id}`}>
+                                                <Image
+                                                    width={30}
+                                                    height={30}
+                                                    src="https://img.icons8.com/metro/30/e67e22/upload.png"
+                                                    alt="upload"
+                                                />
+                                            </label>
+                                            <input
+                                                type="file"
+                                                onChange={handleFileChange}
+                                                accept=".doc,.docx,.xlx,.xlxs,.pdf,.jpg,.png,.mp4"
+                                                multiple={true}
+                                                className={`hidden`}
+                                                id={`anexos-${solicitacao.id}`}
                                             />
-                                        </label>
-                                        <input
-                                            type="file"
-                                            onChange={handleFileChange}
-                                            accept=".doc,.docx,.xlx,.xlxs,.pdf,.jpg,.png,.mp4"
-                                            multiple={true}
-                                            className={`hidden`}
-                                            id={`anexos-${solicitacao.id}`}
-                                        />
-                                        <div className={`rounded-md`}>
-                                            <button
-                                             onClick={(e) => handleUpdateRequest(solicitacao.id, e)}
-                                            
-                                            >
-                                                Reenviar Anexo
-                                            </button>
+                                            <div className={`border rounded-md bg-orange-500 cursor-pointer py-2 px-3 text-white hover:bg-white hover:border-orange-500 hover:text-orange-500 transition`}>
+                                                <button
+                                                    onClick={(e) => handleUpdateRequest(solicitacao.id, e)}
+
+                                                >
+                                                    Enviar
+                                                </button>
+                                            </div>
                                         </div>
                                     </form>
 
                                 </div>
                             ) : ''}
 
-                        </div>
-                    ))}
-                </div>
             </div>
+                    ))}
+        </div >
+            </div >
         </>
     )
 }

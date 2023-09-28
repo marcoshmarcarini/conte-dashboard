@@ -82,26 +82,26 @@ export default function Tables() {
             <div className={`container ${styles.notasList} flex flex-col gap-5 justify-center items-center m-auto`} id={`notas-fiscais`}>
                 <h2 className={`text-center font-bold text-lg`}>Solicitações</h2>
                 <div className={` rounded-lg shadow hidden lg:block transition pl-2 pr-2`}>
-                    <table className={`w-full`} id={`tabela-dados`}>
+                    <table className={`table-auto`} id={`tabela-dados`}>
                         <caption className={`caption-top mt-2`}>
                             Informações sobre as solicitações de pagamento.
                         </caption>
                         <thead className={`bg-gray-50 border-b-2`}>
                             <tr>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Campanha</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Tipo</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>PP/PI</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Nota Fiscal</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Valor</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Data de Veiculação</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Nome Fantasia</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Razão Social</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>CNPJ</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>E-mail válido</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Dados Bancários</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Status</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`}>Anexos</th>
-                                <th className={`p-3 text-sm font-semibold tracking-wide text-center`} colSpan={2}><ExportarDados /></th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Campanha</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Tipo</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>PP/PI</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Nota Fiscal</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Valor</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Data de Veiculação</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Nome Fantasia</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Razão Social</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>CNPJ</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>E-mail válido</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Dados Bancários</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Status</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`}>Anexos</th>
+                                <th className={`p-3 text-sm font-semibold tracking-normal text-center ${styles.tdsize}`} colSpan={2}><ExportarDados /></th>
                             </tr>
                         </thead>
 
@@ -109,17 +109,17 @@ export default function Tables() {
                             {solicitacoes.map((solicitacao, id) => (
 
                                 <tr key={id} className={`${id % 2 == 0 ? 'bg-white text-gray-700' : 'bg-gray-400 text-white'}`}>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>{solicitacao.campanha}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>{solicitacao.tipo}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>{solicitacao.pppi}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>{solicitacao.notafiscal}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>R$ {Number(solicitacao.valor).toFixed(2).replace('.', ',')}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>{solicitacao.dataVeiculacao}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>{solicitacao.nomeFantasia}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>{solicitacao.razaoSocial}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>{solicitacao.cnpj}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>{solicitacao.emailValido}</td>
-                                    <td className={`p-3 text-sm whitespace-wrap text-center`}>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>{solicitacao.campanha}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>{solicitacao.tipo}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>{solicitacao.pppi}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>{solicitacao.notafiscal}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>R$ {Number(solicitacao.valor).toFixed(2).replace('.', ',')}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>{solicitacao.dataVeiculacao}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>{solicitacao.nomeFantasia}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>{solicitacao.razaoSocial}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>{solicitacao.cnpj}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>{solicitacao.emailValido}</td>
+                                    <td className={`p-3 text-sm whitespace-normal text-center ${styles.tdsize}`}>
                                         Dados Bancários: <br />
                                         <ul className={`list-style-none`}>
                                             <li>{solicitacao.numBanco ? `Nº Banco: ${solicitacao.numBanco}` : ''}</li>
@@ -129,7 +129,7 @@ export default function Tables() {
                                         </ul>
                                     </td>
 
-                                    <td className={`p-3 text-sm whitespace-nowrap  text-center break-keep `}>
+                                    <td className={`p-3 text-sm whitespace-wrap  text-center break-keep ${styles.tdsize} `}>
                                         <span className={
                                             `${solicitacao.status === 'Recebido' ? recebido :
                                                 solicitacao.status === 'Com Prefeitura' ? comPrefeitura :
@@ -154,13 +154,12 @@ export default function Tables() {
 
                                     </td>
                                     <td
-                                        className={` ${styles.tdAnexo}`}
+                                        className={` ${styles.tdAnexo} ${styles.tdsize}`}
                                     >
                                         {solicitacao.anexoNF ? (
-                                            solicitacao.anexoNF.map((anexo) => (
+                                            (
                                                 <Link
-                                                    href={anexo.toString()}
-                                                    key={anexo.id}
+                                                    href={solicitacao.anexoNF.toString()}
                                                     target="_blank"
                                                     className={`${styles.linkAnexo}`}
                                                 >
@@ -169,19 +168,22 @@ export default function Tables() {
                                                         height={30}
                                                         alt="document"
                                                         src={
-                                                            String(anexo).match(/.doc/) ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/ms-word.png` :
-                                                                String(anexo).match(/.docx/) ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/ms-word.png` :
-                                                                    String(anexo).match(/.xlx/) ? `https://img.icons8.com/ios-glyphs/50/ffffff/ms-excel.png` :
-                                                                        String(anexo).match(/.xlxs/) ? `https://img.icons8.com/ios-glyphs/50/ffffff/ms-excel.png` :
-                                                                            String(anexo).match(/.pdf/) ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/pdf.png` :
-                                                                                String(anexo).match(/.jpg/) ? `https://img.icons8.com/sf-black-filled/50/ffffff/image.png` :
-                                                                                    String(anexo).match(/.png/) ? `https://img.icons8.com/sf-black-filled/50/ffffff/image.png` :
-                                                                                        String(anexo).match(/.mp4/) ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/video.png` :
-                                                                                            ''
+
+                                                            String(solicitacao.anexoNF).match(/.zip/) ? `https://img.icons8.com/fluency-systems-filled/48/ffffff/archive-folder.png` :
+                                                                String(solicitacao.anexoNF).match(/.doc/) ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/ms-word.png` :
+                                                                    String(solicitacao.anexoNF).match(/.docx/) ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/ms-word.png` :
+                                                                        String(solicitacao.anexoNF).match(/.xlx/) ? `https://img.icons8.com/ios-glyphs/50/ffffff/ms-excel.png` :
+                                                                            String(solicitacao.anexoNF).match(/.xlxs/) ? `https://img.icons8.com/ios-glyphs/50/ffffff/ms-excel.png` :
+                                                                                String(solicitacao.anexoNF).match(/.pdf/) ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/pdf.png` :
+                                                                                    String(solicitacao.anexoNF).match(/.jpg/) ? `https://img.icons8.com/sf-black-filled/50/ffffff/image.png` :
+                                                                                        String(solicitacao.anexoNF).match(/.png/) ? `https://img.icons8.com/sf-black-filled/50/ffffff/image.png` :
+                                                                                            String(solicitacao.anexoNF).match(/.mp4/) ? `https://img.icons8.com/fluency-systems-filled/50/ffffff/video.png` :
+
+                                                                                                ''
                                                         }
                                                     />
                                                 </Link>
-                                            ))) : ''}
+                                            )) : ''}
 
                                     </td>
                                     <td>
@@ -218,7 +220,6 @@ export default function Tables() {
                                     {solicitacao.dataVeiculacao}
                                 </div>
                                 <div>
-
                                     <span className={
                                         `${solicitacao.status === 'Recebido' ? recebido :
                                             solicitacao.status === 'Com Prefeitura' ? comPrefeitura :
@@ -238,37 +239,34 @@ export default function Tables() {
                             <div className={`text-sm text-gray-700`}><p>Clique nos ícones para baixar os anexos:</p></div>
                             <div className={`flex justify-end items-center`}>
                                 <div className={`flex mr-auto`}>
+
+
                                     {solicitacao.anexoNF ? (
-                                        solicitacao.anexoNF.map((anexo) => {
-                                            return (
-                                                <Link
-                                                    href={anexo.toString()}
-                                                    key={anexo.id}
-                                                    target="_blank"
-                                                    className={`${styles.linkAnexoMb}`}
-                                                >
-                                                    <Image
-                                                        width={30}
-                                                        height={30}
-                                                        alt="document"
-                                                        src={
-                                                            String(anexo).match(/.doc/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
-                                                                String(anexo).match(/.docx/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
-                                                                    String(anexo).match(/.xlx/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
-                                                                        String(anexo).match(/.xlxs/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
-                                                                            String(anexo).match(/.pdf/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/pdf.png` :
-                                                                                String(anexo).match(/.jpg/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
-                                                                                    String(anexo).match(/.png/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
-                                                                                        String(anexo).match(/.mp4/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/video.png` :
-                                                                                            ''
 
-                                                                                            /* https://img.icons8.com/sf-black-filled/50/e67e22/image.png */
-                                                        }
-                                                    />
+                                        <Link
+                                            href={solicitacao.anexoNF.toString()}
 
-                                                </Link>
-                                            )
-                                        })
+                                            target="_blank"
+                                            className={`${styles.linkAnexoMb}`}
+                                        >
+                                            <Image
+                                                width={30}
+                                                height={30}
+                                                alt="document"
+                                                src={
+                                                    String(solicitacao.anexoNF).match(/.zip/) ? `https://img.icons8.com/fluency-systems-filled/48/e67e22/archive-folder.png` :
+                                                            String(solicitacao.anexoNF).match(/.doc/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
+                                                                String(solicitacao.anexoNF).match(/.docx/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/ms-word.png` :
+                                                                    String(solicitacao.anexoNF).match(/.xlx/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
+                                                                        String(solicitacao.anexoNF).match(/.xlxs/) ? `https://img.icons8.com/ios-glyphs/50/e67e22/ms-excel.png` :
+                                                                            String(solicitacao.anexoNF).match(/.pdf/) ? `https://img.icons8.com/fluency-systems-filled/50/e67e22/pdf.png` :
+                                                                                String(solicitacao.anexoNF).match(/.jpg/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
+                                                                                    String(solicitacao.anexoNF).match(/.png/) ? `https://img.icons8.com/sf-black-filled/50/e67e22/image.png` :
+                                                                                        ''
+                                                }
+                                            />
+
+                                        </Link>
                                     ) : ''}
                                 </div>
                                 <div>
@@ -285,7 +283,7 @@ export default function Tables() {
                                         />
                                     </button>
                                 </div>
-                                <div>
+                                {/* <div>
                                     <button
                                         type="button"
                                         className={`${styles.btnRemove} shadow`}
@@ -298,7 +296,7 @@ export default function Tables() {
                                             alt="available-updates"
                                         />
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     ))}

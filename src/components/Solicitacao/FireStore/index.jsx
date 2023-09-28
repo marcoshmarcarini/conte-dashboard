@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react"
 import { db, storage } from '../../../utils/firebase'
 import { addDoc, collection } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import JSZip from "jszip"
 
 import Image from "next/image"
 
@@ -41,10 +42,25 @@ export default function FireStore() {
     const [selectedFiles, setSelectedFiles] = useState([])
     const [infoTransform, setInfoTransform] = useState('translateX(50px)')
 
-    const handleFileChange = (e) => {
+    const handleFileChange = async (e) => {
+        //
+        //const size = files.size
+        var zip = new JSZip()
         const files = e.target.files
-        const size = files.size
-        setSelectedFiles([...selectedFiles, ...files])
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i]
+            zip.file(file.name, file)
+        }
+
+        zip.generateAsync({ type: 'blob' }).then((zipBlob) => {
+            const zipFileName = "anexos.zip"
+            const zipFile = new File([zipBlob], zipFileName)
+            setSelectedFiles([...selectedFiles, zipFile])
+        })
+
+
+
     }
 
     const [dnone, setDnone] = useState('none')
@@ -61,15 +77,19 @@ export default function FireStore() {
         }
 
         if (novaNota.campanha !== '' /* && ... */) {
-            const storageRef = ref(storage, 'anexos')
+            const storageRef = ref(storage, 'anexos/' + novaNota.campanha + '/anexos.zip')
+            await uploadBytes(storageRef, selectedFiles[0])
+            const anexosURL = await getDownloadURL(storageRef)
+            console.log(anexosURL)
 
-            const uploadedFileURLs = await Promise.all(
+
+            /* const uploadedFileURLs = await Promise.all(
                 selectedFiles.map(async (file) => {
                     const fileRef = ref(storageRef, file.name)
                     await uploadBytes(fileRef, file)
                     return getDownloadURL(fileRef)
                 })
-            )
+            )  */
             const username = session.user.email
 
             await addDoc(collection(db, 'solicitacao'), {
@@ -81,7 +101,7 @@ export default function FireStore() {
                 dataVeiculacao: novaNota.dataVeiculacao, valor: novaNota.valor,
                 notafiscal: novaNota.notafiscal,
                 /* Anexos */
-                anexoNF: uploadedFileURLs, link: novaNota.link,
+                anexoNF: anexosURL, link: novaNota.link,
                 /* Infos Bancárias */
                 numBanco: novaNota.numBanco, agencia: novaNota.agencia,
                 conta: novaNota.conta, pix: novaNota.pix,
